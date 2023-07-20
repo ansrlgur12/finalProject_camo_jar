@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const CAMO_DOMAIN = "http://localhost:8111";
+export const CAMO_DOMAIN = "";
 
 const ReviewApi = {
 
