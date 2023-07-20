@@ -16,7 +16,6 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/verifyIamport")
-@CrossOrigin(origins = "http://localhost:3000")
 public class VerifyController {
 
     /** Iamport 결제 검증 컨트롤러 **/
