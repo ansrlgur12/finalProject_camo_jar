@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const COMMENT_API_URL = 'http://localhost:8111/comment';
+export const COMMENT_API_URL = "";
 
   // 댓글 작성
 const CommentApi = {

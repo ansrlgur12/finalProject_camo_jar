@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const domain = "http://localhost:8111";
+export const domain = "";
 
 const Functions = {
     //accessToken 세터
