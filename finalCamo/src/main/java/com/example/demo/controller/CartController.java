@@ -18,7 +18,6 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/cart")
 public class CartController {
 

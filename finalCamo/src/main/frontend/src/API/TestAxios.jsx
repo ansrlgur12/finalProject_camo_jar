@@ -1,5 +1,5 @@
 import axios from "axios";
-export const domain = "http://localhost:8111";
+export const domain = "";
 export const weatherApiKey = "12779614ba1e41d795943be1a07331ac";
 
 const AxiosApi = {

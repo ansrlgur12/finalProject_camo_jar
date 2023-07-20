@@ -23,7 +23,6 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/order")
 public class OrderController {
 
