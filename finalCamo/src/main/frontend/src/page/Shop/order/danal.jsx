@@ -37,7 +37,7 @@ const Danal=(totalCost)=> {
         buyer_email: email,               // 구매자 이메일
         buyer_addr: orderData.address,                    // 구매자 주소
         buyer_postcode: orderData.zipcode,                      // 구매자 우편번호
-        m_redirect_url: "/payComplete",
+        m_redirect_url: "http://camp-mo.site/payComplete",
       };
   
       /* 4. 결제 창 호출하기 */
