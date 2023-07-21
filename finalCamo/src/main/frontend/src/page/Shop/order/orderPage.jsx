@@ -11,7 +11,7 @@ import SearchAddress from '../../../API/Address';
 import { useOrderContext } from '../../../context/OrderContext';
 import KakaoPay from './kakaoPay';
 import EllipsisText from '../../../Commons/ellipsis';
-
+import "../../../../src/font.css";
 
 const TableContainer = styled.div`
   background-color: #FFFFFF;
@@ -26,29 +26,29 @@ const TableContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
- 
+
   .ant-checkbox-checked .ant-checkbox-inner {
   background-color:#2D6247;
-  border-color: #2D6247; 
+  border-color: #2D6247;
   margin-bottom: 20rem;
 }
 button.ant-btn{
-  background-color: #2D6247; 
+  background-color: #2D6247;
    &:hover {
-    background-color: #2D6247; 
+    background-color: #2D6247;
       opacity: 0.7;
     }
 }
 .ant-table-thead > tr > th  {
   text-align: center;
   background-color: #2D6247;
-  
+
   color: #fff;
 }
 
 tbody {
   text-align: center;
-  
+
 
   align-items: center;
   justify-content: center;
@@ -66,17 +66,17 @@ tbody {
    overflow-x: auto;
   display:block;
   margin-left:0;
- 
+
     .ant-table {
       margin-left: 0.4rem;
       width: 100%;
     display:flex;
   font-size: 0.1rem;
-  
+
 }
 .ant-table-tbody > tr > td {
   padding: 12px 16px;
- 
+
 }
 .ant-table-thead > tr > th  {
   white-space: nowrap;
@@ -95,7 +95,7 @@ const Container = styled.section`
 overflow-x: auto;
 border-radius: 4px;
 border: none;
-  
+
 display: flex;
 box-sizing: border-box;
 padding-top: 70px;
@@ -120,12 +120,17 @@ h1 {
     padding: 0.6em 0.5em;
   }
   .scrollable-div {
+    font-family: 'Pretendard-Regular';
   overflow: auto;
-  height: 200px; 
+  height: 200px;
+  width: 40vw;
 }
   @media screen and (max-width:768px) {
   width:auto;
- 
+  .scrollable-div {
+
+  width: 82vw;
+}
 
 }
 `;

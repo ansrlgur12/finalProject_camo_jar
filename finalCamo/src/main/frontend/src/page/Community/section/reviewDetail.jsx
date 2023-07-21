@@ -2,23 +2,52 @@ import React, { useState, useEffect } from 'react';
 import { HeartOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Layout, Modal } from 'antd';
 import styled from 'styled-components';
-import camping from '../../../images/camping.png';
 import ReviewApi from '../../../API/ReviewAPI';
-import CommentForm from './commentForm';
 import CommentList from './commentList';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '../../../main/header';
 import LikesApi from '../../../API/LikesAPI';
 import Functions from '../../../Functions';
 
+
 const { Content } = Layout;
+
+
+const StyledButton = styled.div`
+  background: #2D6247;
+  color:#fff;
+  border-radius:4px;
+  max-width: 80px;
+  text-align: center;
+  margin-left: 4rem;
+  @media (max-width: 768px) {
+    width:20vw;
+    margin-left: 4rem;
+    text-align: center;
+  }
+`
+
+const StyledModal = styled(Modal)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 768px) {
+  .ant-modal-content {
+    margin-right: 5.5rem;
+    margin-top: 5rem;
+  }
+}
+`;
+
+
+
 
 const ResponsiveContent = styled(Layout)`
   @media (max-width: 768px) {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
   }
 
 `
@@ -30,9 +59,16 @@ const ReviewContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid #DDDDDD;
+  .modalBtn{
+    width:80px;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #2D6247;
+  padding:10px;
+  }
   @media (max-width: 768px) {
     width: 85vw;
-    
+
   }
 `;
 
@@ -100,6 +136,7 @@ const ReviewDetail = () => {
   const [liked, setLiked] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { id } = useParams();
+  const nav = useNavigate();
 
   useEffect(() => {
     const fetchReview = async () => {
@@ -111,7 +148,7 @@ const ReviewDetail = () => {
         console.log(error);
       }
     };
-  
+
     fetchReview();
   }, [token, id]);
 
@@ -174,21 +211,23 @@ const ReviewDetail = () => {
             </ReviewMeta>
             <CommentList reviewId={review?.id} />
 
-            <Modal
+            <StyledModal
               title="리뷰 삭제"
               visible={showDeleteModal}
               onOk={handleConfirmDelete}
               onCancel={handleCancelDelete}
               footer={null}
             >
-              <h3>삭제 완료</h3>
+
               <p>글이 성공적으로 삭제되었습니다.</p>
-              <Link to="/community">확인</Link>
-            </Modal>
+              <StyledButton  onClick={() => nav("/community")}>확인</StyledButton>
+
+            </StyledModal>
           </ReviewContainer>
         ) : (
           <p>리뷰가 없습니다.</p>
         )}
+
       </Content>
         </ResponsiveContent>
     </>
