@@ -11,7 +11,7 @@ import Modal from "../../Commons/Modal";
 import  { UserContext } from "../../API/UserInfo";
 import AxiosApi from "../../API/TestAxios";
 import { ModalStyle } from "../../main/header";
-
+import Functions from "../../Functions";
 
 const Container = styled.div`
   padding: 32px 24px;
@@ -21,7 +21,7 @@ const Container = styled.div`
   top:0; left: 0; bottom: 0; right: 0;
   background: rgba(0, 0, 0, 0.8);
 }
- 
+
 /* 모달창 영역을 꾸민다 */
 .modalBox{
   position: absolute;
@@ -44,7 +44,7 @@ const Container = styled.div`
   background-color: #2D6247;
   padding:10px;
   }
- 
+
  }
 `;
 
@@ -57,7 +57,7 @@ export const ButtonWrapper = styled.div`
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px #ccc;
     border-radius: 10px;
-    color:#2D6247; 
+    color:#2D6247;
     background-color: #fff;
     flex: 1;
     padding: 20px;
@@ -72,24 +72,37 @@ const ProductDetailOrder=({product})=> {
 const nav = useNavigate();
 const { email } = useContext(UserContext);
 const { addToCart,setSelectedItems } = useContext(CartContext);
-const [isOpen, setIsOpen] = useState(false);
+const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+const [isAddToCartModalOpen, setIsAddToCartModalOpen] = useState(false);
 const [addedCartItemId, setAddedCartItemId] = useState(null);
+const token = Functions.getAccessToken();
 
 const loginCheck = () => {
-  if (!email) {
-      setIsOpen(true);
+  if (!token) {
+      setIsLoginModalOpen(true);
   } else {
       handleBuyNow();
   }
 };
-
-
-const openModal = () => {
-  setIsOpen(true);
+const loginCheck2 = () => {
+  if (!token) {
+    setIsLoginModalOpen(true);
+  } else {
+    setIsAddToCartModalOpen(true);
+  }
 };
 
-const closeModal = () => {
-  setIsOpen(false);
+
+
+
+const closeLoginModal = () => {
+  setIsLoginModalOpen(false);
+};
+
+
+
+const closeAddToCartModal = () => {
+  setIsAddToCartModalOpen(false);
 };
 
 
@@ -98,19 +111,19 @@ const handleAddToCart = async () => {
   try {
     console.log(product.id, quantity, email);
     const response = await AxiosApi.addToCart(product.id, quantity, email);
-    
+
     if(response.status === 200) {
       console.log('성공');
       console.log(response.data);
-      
+
       // Context에 아이템 추가
-      addToCart(product, quantity); 
-      closeModal(); 
-       
+      addToCart(product, quantity);
+      closeAddToCartModal();
+
       // 추가된 상품의 cartItemId 저장
       console.log(response.data);
       setAddedCartItemId(response.data);
-      
+
 
       // 아이템 정보를 반환
       return {
@@ -122,7 +135,7 @@ const handleAddToCart = async () => {
         quantity: quantity,
       };
     } else {
-      console.log('오류'); 
+      console.log('오류');
     }
   } catch(error) {
     console.error( error);
@@ -155,38 +168,38 @@ const handleBuyNow = async() =>{
 
   return (
     <>
-   
+
     <Container>
       <OrderFormHeader product={product}/>
       <QuantityInput quantity={quantity} setQuantity={setQuantity}/>
       <OrderFormFooter />
       <OrderInfo  quantity={quantity} price={product.price}/>
-      
+
      <ButtonWrapper>
-        
-        <button onClick={openModal}>ADD TO CART</button>
-       
-        <Modal isOpen={isOpen} onClose={closeModal}>
-       
+
+        <button onClick={loginCheck2}>ADD TO CART</button>
+
+        <Modal isOpen={isAddToCartModalOpen} onClose={closeAddToCartModal}>
+
         <p>상품을 카트에 추가하시겠습니까?</p>
          <div className="btnWrapper">
         <button className="modalBtn"  onClick={handleAddToCart}>
       예</button>
-        <button className="modalBtn" onClick={() => {  closeModal(); }}>아니오</button>  
-         
+        <button className="modalBtn" onClick={() => {  closeAddToCartModal() }}>아니오</button>
+
         </div>
       </Modal>
-        <button onClick={handleBuyNow}>BUY NOW</button>    
+        <button onClick={loginCheck}>BUY NOW</button>
         </ButtonWrapper>
-        
-      
+
+
     </Container>
     <ModalStyle>
-            <Modal isOpen={isOpen} onClose={closeModal}>
+            <Modal isOpen={isLoginModalOpen} onClose={closeLoginModal}>
                 <p>로그인 후 확인 가능합니다.</p>
                 <div className="btnWrapper">
                     <button className="modalBtn" onClick={() => {
-                        closeModal();
+                        closeLoginModal()
                         nav("/intro");
                     }}>
                         로그인

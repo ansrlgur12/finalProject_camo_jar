@@ -10,7 +10,7 @@ import { UserContext } from '../../../API/UserInfo';
 import MobileFavorite from './mobileFavorite';
 import EllipsisText from '../../../Commons/ellipsis';
 import Modal from '../../../Commons/Modal';
-
+import { useLocation } from 'react-router-dom';
 
 
 const TableContainer = styled.div`
@@ -108,7 +108,7 @@ const MobileCart = () => {
   const nav = useNavigate();
   const { email } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
- 
+ let location = useLocation();
 
 // 상태 정의
 const [cartData, setCartData] = useState([]);
@@ -139,7 +139,7 @@ useEffect(() => {
 const setQuantity = async (key, quantity) => {
   setQuantityInContext(key, quantity);
 
-  if (window.location.pathname === '/cart') {
+  if (location.pathname === '/cart') {
     const response = await AxiosApi.updateItem(key, quantity, email);
     if (response.status !== 200) {
       console.error('Failed to update item quantity');
