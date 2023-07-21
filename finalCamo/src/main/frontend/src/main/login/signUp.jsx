@@ -8,7 +8,17 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUpStyle = styled.div`
     box-sizing: border-box;
+    .overlap{
+        font-family: "GongGothicMedium";
+        height: 30px;
+        background-color: white;
+        border: .5px solid black;
+        border-radius: 3px;
+        text-align: center;
+        cursor: pointer;
+        color: #595959;
 
+    }
     .logo{
         width: 100%;
         height: 100px;
@@ -44,7 +54,7 @@ const SignUpStyle = styled.div`
         border-radius: 3px;
     }
     .joinSuccess{
-        width: 90px;
+        width: 120px;
         height: 40px;
         padding: 10px 15px;
         background-color: #2D6247;
@@ -53,9 +63,10 @@ const SignUpStyle = styled.div`
         border-radius: 3px;
         text-align: center;
         cursor: pointer;
+        white-space: nowrap
     }
     .backBtn{
-        width: 90px;
+        width: 120px;
         height: 40px;
         padding: 10px 15px;
         background-color: #2D6247;
@@ -64,9 +75,10 @@ const SignUpStyle = styled.div`
         border-radius: 3px;
         text-align: center;
         cursor: pointer;
+        white-space: nowrap
     }
     .joinFail{
-        width: 90px;
+        width: 120px;
         height: 40px;
         padding: 10px 15px;
         background-color: white;
@@ -74,6 +86,7 @@ const SignUpStyle = styled.div`
         border-radius: 3px;
         text-align: center;
         cursor: pointer;
+        white-space: nowrap
     }
     .joinSuccess:hover {
         background-color: #45a049;
@@ -117,6 +130,11 @@ const SignUpStyle = styled.div`
     }
     .error {
         color: red;
+    }
+    @media screen and (max-width: 768px) {
+        .signup-page{
+            width: 70vw;
+        }
     }
 `;
 

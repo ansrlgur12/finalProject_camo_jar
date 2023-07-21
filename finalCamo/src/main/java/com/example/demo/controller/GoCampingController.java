@@ -120,6 +120,148 @@ public class GoCampingController {
         List<CampDto> list = campingDataService.getCampDataWithPagination(dho, sigungu, page, size, sortBy);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    @GetMapping("/camping-data/1") // 캠핑장 정보 불러오기
+    public String getCampingData1() throws JsonProcessingException {
+        String url = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=q/N6THt6wGszjSEFU5zzQVQIq44LTMRAzwL8RLnLtj7YRmwQec87Tx1SMf48wKbaOH2LLcoHyXVnR8YTfHapdg==&numOfRows=377&pageNo=2&MobileOS=ETC&MobileApp=AppTest&_type=json";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String jsonResponse = response.getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode root = objectMapper.readTree(jsonResponse);
+        JsonNode arrayNode = root.get("response").get("body").get("items").get("item");
+
+        campingDataService.saveCampingData(arrayNode);
+        return null;
+    }
+
+    @GetMapping("/camping-data/2") // 캠핑장 정보 불러오기
+    public String getCampingData2() throws JsonProcessingException {
+        String url = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=q/N6THt6wGszjSEFU5zzQVQIq44LTMRAzwL8RLnLtj7YRmwQec87Tx1SMf48wKbaOH2LLcoHyXVnR8YTfHapdg==&numOfRows=377&pageNo=3&MobileOS=ETC&MobileApp=AppTest&_type=json";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String jsonResponse = response.getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode root = objectMapper.readTree(jsonResponse);
+        JsonNode arrayNode = root.get("response").get("body").get("items").get("item");
+
+        campingDataService.saveCampingData(arrayNode);
+        return null;
+    }
+
+    @GetMapping("/camping-data/3") // 캠핑장 정보 불러오기
+    public String getCampingData3() throws JsonProcessingException {
+        String url = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=q/N6THt6wGszjSEFU5zzQVQIq44LTMRAzwL8RLnLtj7YRmwQec87Tx1SMf48wKbaOH2LLcoHyXVnR8YTfHapdg==&numOfRows=377&pageNo=4&MobileOS=ETC&MobileApp=AppTest&_type=json";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String jsonResponse = response.getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode root = objectMapper.readTree(jsonResponse);
+        JsonNode arrayNode = root.get("response").get("body").get("items").get("item");
+
+        campingDataService.saveCampingData(arrayNode);
+        return null;
+    }
+
+    @GetMapping("/camping-data/4") // 캠핑장 정보 불러오기
+    public String getCampingData4() throws JsonProcessingException {
+        String url = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=q/N6THt6wGszjSEFU5zzQVQIq44LTMRAzwL8RLnLtj7YRmwQec87Tx1SMf48wKbaOH2LLcoHyXVnR8YTfHapdg==&numOfRows=377&pageNo=5&MobileOS=ETC&MobileApp=AppTest&_type=json";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String jsonResponse = response.getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode root = objectMapper.readTree(jsonResponse);
+        JsonNode arrayNode = root.get("response").get("body").get("items").get("item");
+
+        campingDataService.saveCampingData(arrayNode);
+        return null;
+    }
+
+    @GetMapping("/camping-data/5") // 캠핑장 정보 불러오기
+    public String getCampingData5() throws JsonProcessingException {
+        String url = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=q/N6THt6wGszjSEFU5zzQVQIq44LTMRAzwL8RLnLtj7YRmwQec87Tx1SMf48wKbaOH2LLcoHyXVnR8YTfHapdg==&numOfRows=377&pageNo=6&MobileOS=ETC&MobileApp=AppTest&_type=json";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String jsonResponse = response.getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode root = objectMapper.readTree(jsonResponse);
+        JsonNode arrayNode = root.get("response").get("body").get("items").get("item");
+
+        campingDataService.saveCampingData(arrayNode);
+        return null;
+    }
+
+    @GetMapping("/camping-data/6") // 캠핑장 정보 불러오기
+    public String getCampingData6() throws JsonProcessingException {
+        String url = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=q/N6THt6wGszjSEFU5zzQVQIq44LTMRAzwL8RLnLtj7YRmwQec87Tx1SMf48wKbaOH2LLcoHyXVnR8YTfHapdg==&numOfRows=377&pageNo=7&MobileOS=ETC&MobileApp=AppTest&_type=json";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String jsonResponse = response.getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode root = objectMapper.readTree(jsonResponse);
+        JsonNode arrayNode = root.get("response").get("body").get("items").get("item");
+
+        campingDataService.saveCampingData(arrayNode);
+        return null;
+    }
+    @GetMapping("/camping-data/7") // 캠핑장 정보 불러오기
+    public String getCampingData7() throws JsonProcessingException {
+        String url = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=q/N6THt6wGszjSEFU5zzQVQIq44LTMRAzwL8RLnLtj7YRmwQec87Tx1SMf48wKbaOH2LLcoHyXVnR8YTfHapdg==&numOfRows=377&pageNo=8&MobileOS=ETC&MobileApp=AppTest&_type=json";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String jsonResponse = response.getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode root = objectMapper.readTree(jsonResponse);
+        JsonNode arrayNode = root.get("response").get("body").get("items").get("item");
+
+        campingDataService.saveCampingData(arrayNode);
+        return null;
+    }
+    @GetMapping("/camping-data/8") // 캠핑장 정보 불러오기
+    public String getCampingData8() throws JsonProcessingException {
+        String url = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=q/N6THt6wGszjSEFU5zzQVQIq44LTMRAzwL8RLnLtj7YRmwQec87Tx1SMf48wKbaOH2LLcoHyXVnR8YTfHapdg==&numOfRows=377&pageNo=9&MobileOS=ETC&MobileApp=AppTest&_type=json";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String jsonResponse = response.getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode root = objectMapper.readTree(jsonResponse);
+        JsonNode arrayNode = root.get("response").get("body").get("items").get("item");
+
+        campingDataService.saveCampingData(arrayNode);
+        return null;
+    }
+    @GetMapping("/camping-data/9") // 캠핑장 정보 불러오기
+    public String getCampingData9() throws JsonProcessingException {
+        String url = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=q/N6THt6wGszjSEFU5zzQVQIq44LTMRAzwL8RLnLtj7YRmwQec87Tx1SMf48wKbaOH2LLcoHyXVnR8YTfHapdg==&numOfRows=377&pageNo=10&MobileOS=ETC&MobileApp=AppTest&_type=json";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String jsonResponse = response.getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode root = objectMapper.readTree(jsonResponse);
+        JsonNode arrayNode = root.get("response").get("body").get("items").get("item");
+
+        campingDataService.saveCampingData(arrayNode);
+        return null;
+    }
+
 }
 
 
