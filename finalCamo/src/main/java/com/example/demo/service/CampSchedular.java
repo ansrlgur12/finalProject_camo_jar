@@ -25,7 +25,7 @@ public class CampSchedular {
     private CampRepository campRepository;
     private CampDto campDto;
 
-    @Scheduled(cron = "0 0 4 * * *") // 매일 새벽 4시에 실행
+    @Scheduled(cron = "0 0 1 * * *") // 매일 새벽 1시에 실행
     public void updateCampingData() throws JsonProcessingException {
         System.out.println("스케줄러 실행 !!!");
         // API 호출 및 응답 처리

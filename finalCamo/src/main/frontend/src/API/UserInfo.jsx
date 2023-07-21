@@ -17,7 +17,7 @@ const UserStore = (props) => {
 
     useEffect(() => {
         const token = Functions.getAccessToken();
-        const CAMO_DOMAIN = "http://localhost:8111";
+        const CAMO_DOMAIN = "";
       
         axios.get(CAMO_DOMAIN + "/api/v1/userinfo", {
           headers: {
