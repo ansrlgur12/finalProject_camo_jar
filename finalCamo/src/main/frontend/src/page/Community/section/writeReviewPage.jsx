@@ -15,32 +15,33 @@ const { Option } = Select;
 const GlobalStyle = createGlobalStyle`
 
   .ck-editor__editable {
-    height: 500px;
-   
+    height: 58vh;
+    width: 39.5vw;
   }
- 
+
  h2{
   text-align: center;
-  margin-right: 34rem;
+  margin-right: 37rem;
  }
   button.ant-btn{
     width: 6vw;
-  background-color: #2D6247; 
+  background-color: #2D6247;
   display: flex;
   margin-top: 1rem;
-  margin-left: 65.8rem;
+  margin-left: 67rem;
   align-items: center;
   justify-content: center;
   color: #fff;
    &:hover {
-   
+
       opacity: 0.7;
     }
   }
   @media screen and (max-width:768px) {
     .ck-editor__editable {
       height: 40vh;
-     
+      width: 79vw;
+
     }
     button.ant-btn{
       width: 23vw;
@@ -55,7 +56,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const ReviewContainer = styled.div`
-  max-width: 700px;
+  max-width: 40vw;
   margin: 0 auto;
   border: 2px solid #2D6247; 
   border-radius: 6px;
