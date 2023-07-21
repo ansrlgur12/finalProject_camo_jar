@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Modal, Layout, Input, Select } from 'antd';
@@ -10,6 +10,33 @@ import Functions from '../../../Functions';
 
 const { Content } = Layout;
 const { Option } = Select;
+
+
+const StyledButton = styled.div`
+  background: #2D6247;
+  color:#fff;
+  border-radius:4px;
+  max-width: 80px;
+  text-align: center;
+  margin-left: 4rem;
+  @media (max-width: 768px) {
+    width:20vw;
+    margin-left: 4rem;
+    text-align: center;
+  }
+`
+
+const StyledModal = styled(Modal)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 768px) {
+  .ant-modal-content {
+
+    margin-top: 8rem;
+  }
+}
+`;
 
 const GlobalStyle = createGlobalStyle`
   .ck-editor__editable {
@@ -73,6 +100,7 @@ const ModifiedReview = () => {
   const [postType, setPostType] = useState(null);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const nav = useNavigate();
 
   useEffect(() => {
     const fetchReview = async () => {
@@ -157,11 +185,10 @@ const ModifiedReview = () => {
             }}
           />
 
-          <Modal visible={modalVisible} onCancel={closeModal} footer={null}>
-            <h3>수정 완료</h3>
+          <StyledModal visible={modalVisible} onCancel={closeModal} footer={null} title={"수정 완료"}>
             <p>글이 성공적으로 수정되었습니다.</p>
-            <Link to="/community">확인</Link>
-          </Modal>
+            <StyledButton  onClick={() => nav("/community")}>확인</StyledButton>
+          </StyledModal>
         </ReviewContainer>
         <Button onClick={handleSubmit}>수정하기</Button>
       </Content>

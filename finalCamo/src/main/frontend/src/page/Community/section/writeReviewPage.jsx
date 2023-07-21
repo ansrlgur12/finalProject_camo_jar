@@ -5,12 +5,39 @@ import { Button, Modal, Layout, Input, Select } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 import ReviewApi from '../../../API/ReviewAPI';
 import Header from '../../../main/header';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { storage } from '../../../firebase/firebaseConfig';
 import Functions from '../../../Functions';
 
 const { Content } = Layout;
 const { Option } = Select;
+
+
+
+const StyledButton = styled.div`
+  background: #2D6247;
+  color:#fff;
+  border-radius:4px;
+  max-width: 80px;
+  text-align: center;
+  margin-left: 4rem;
+  @media (max-width: 768px) {
+    width:20vw;
+    margin-left: 4rem;
+    text-align: center;
+  }
+`
+
+const StyledModal = styled(Modal)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 768px) {
+  .ant-modal-content {
+    margin-top: 8rem;
+  }
+}
+`
 
 const GlobalStyle = createGlobalStyle`
 
@@ -58,12 +85,12 @@ const GlobalStyle = createGlobalStyle`
 const ReviewContainer = styled.div`
   max-width: 40vw;
   margin: 0 auto;
-  border: 2px solid #2D6247; 
+  border: 2px solid #2D6247;
   border-radius: 6px;
- 
+
   @media screen and (max-width:768px) {
     max-width: 80vw;
-  
+
   }
 `;
 
@@ -75,6 +102,7 @@ const WriteReviewPage = () => {
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState(null);
+  const nav =  useNavigate();
 
   const handleSubmit = async () => {
     try {
@@ -168,12 +196,11 @@ const WriteReviewPage = () => {
   }}
 />
 
-        
-          <Modal visible={modalVisible} onCancel={closeModal} footer={null}>
-            <h3>작성 완료</h3>
+
+          <StyledModal  visible={modalVisible} onCancel={closeModal} footer={null} title={"작성 완료"}>
             <p>글이 성공적으로 작성되었습니다.</p>
-            <Link to="/community">확인</Link>
-          </Modal>
+            <StyledButton onClick={() => nav("/community")}>확인</StyledButton>
+          </StyledModal>
         </ReviewContainer>
         <Button onClick={handleSubmit}>작성하기</Button>
       </Content>

@@ -11,6 +11,20 @@ const ResponsiveButton = styled(Button)`
     font-size: 0.4rem;
    }
 `;
+const StyledModal = styled(Modal)`
+
+  width: 400px;
+  @media (max-width: 768px) {
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  .ant-modal-content {
+    width: 70vw;
+    margin-top: 8rem;
+    margin-right: 5.5rem;
+  }
+}
+`;
 
 
 const CommentList = ({ reviewId }) => {
@@ -74,7 +88,7 @@ const CommentList = ({ reviewId }) => {
       message.error('댓글 수정이 실패하였습니다.');
     }
     setIsModalVisible(false);
-  };  
+  };
 
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -92,7 +106,7 @@ const CommentList = ({ reviewId }) => {
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" style={{ background: "#2D6247" }}>
             작성
           </Button>
         </Form.Item>
@@ -123,9 +137,9 @@ const CommentList = ({ reviewId }) => {
           </List.Item>
         )}
       >
-        <Modal title="댓글 수정" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <StyledModal title="댓글 수정" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
           <Input.TextArea value={editingContent} onChange={e => setEditingContent(e.target.value)} />
-        </Modal>
+        </StyledModal>
       </List>
     </>
   );
