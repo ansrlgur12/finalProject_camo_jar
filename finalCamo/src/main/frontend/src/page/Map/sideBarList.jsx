@@ -152,7 +152,7 @@ const SideBarList = (props) => {
         if(change === 1) {
             console.log(searchValue)
             const searchCamp = async() => {
-                const rsp = await AxiosApi.searchCampData(searchValue, currentData);
+                const rsp = await AxiosApi.searchCampData(searchValue, currentData, currentPage, pageSize);
                 setCampListData(rsp.data);
                 console.log(rsp.data);
                 setCurrentPage(0);

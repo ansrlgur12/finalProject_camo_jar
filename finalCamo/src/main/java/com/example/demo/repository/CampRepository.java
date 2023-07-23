@@ -17,9 +17,9 @@ public interface CampRepository extends JpaRepository<Camp, Long> {
 
     List<Camp> findByMapXAndMapY(String mapX, String mapY);
 
-    List<Camp> findByFacltNmContaining(String facltNm);
+    List<Camp> findByFacltNmContaining(String facltNm, Pageable pageable);
 
-    List<Camp> findByAnimalCmgClNotContainingAndFacltNmContaining(String animalCmgCl, String facltNm);
+    List<Camp> findByAnimalCmgClNotContainingAndFacltNmContaining(String animalCmgCl, String facltNm, Pageable pageable);
 
     //검색바
     List<Camp> findTop32ByOrderById();

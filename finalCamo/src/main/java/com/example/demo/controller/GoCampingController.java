@@ -78,11 +78,12 @@ public class GoCampingController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("/searchData/{searchValue}/{currentData}")
-    public ResponseEntity<List<CampDto>> searchData(@PathVariable String searchValue, @PathVariable String currentData){
+    // 검색결과 페이지네이션
+    @GetMapping("/searchData/{searchValue}/{currentData}/{page}/{size}")
+    public ResponseEntity<List<CampDto>> searchDataPN(@PathVariable String searchValue, @PathVariable String currentData, @PathVariable int page, @PathVariable int size){
         System.out.println(searchValue + " : searchValue 값");
         System.out.println(currentData + " : currentData 값");
-        List<CampDto> list = campingDataService.getSearchData(searchValue, currentData);
+        List<CampDto> list = campingDataService.getSearchDataPn(searchValue, currentData, page, size);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
