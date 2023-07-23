@@ -126,6 +126,10 @@ const Section2 = styled.div`
         display: flex;
         justify-content: center;
         flex-direction: column;
+        .itemtext{
+            font-size: .8em;
+        }
+
     }
 
     .item2{
@@ -136,6 +140,9 @@ const Section2 = styled.div`
         display: flex;
         justify-content: center;
         flex-direction: column;
+        .itemtext{
+            font-size: 1em;
+        }
     }
 
     .item3{
@@ -148,10 +155,12 @@ const Section2 = styled.div`
         display: flex;
         justify-content: center;
         flex-direction: column;
+        .itemtext{
+            font-size: 1.1em;
+        }
     }
     .itemtext {
         color: white;
-        font-size: 1rem;
         margin-top: 1rem;
         margin-left: 1rem;
         transform: translateY(0px);

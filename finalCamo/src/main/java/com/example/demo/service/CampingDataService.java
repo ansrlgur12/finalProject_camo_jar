@@ -265,10 +265,11 @@ public class CampingDataService {
         }
         return campDtos;
     }
-    public List<CampDto> getSearchData(String searchValue, String currentData){
+    public List<CampDto> getSearchDataPn(String searchValue, String currentData, int page, int size){
+        Pageable pageable = PageRequest.of(page, size, Sort.by("facltNm").ascending());
 
-        List<Camp> items = campRepository.findByFacltNmContaining(searchValue);
-        List<Camp> itemsAnimal = campRepository.findByAnimalCmgClNotContainingAndFacltNmContaining("불가능", searchValue);
+        List<Camp> items = campRepository.findByFacltNmContaining(searchValue, pageable);
+        List<Camp> itemsAnimal = campRepository.findByAnimalCmgClNotContainingAndFacltNmContaining("불가능", searchValue, pageable);
         List<CampDto> campDtos = new ArrayList<>();
 
         if("normal".equals(currentData)){

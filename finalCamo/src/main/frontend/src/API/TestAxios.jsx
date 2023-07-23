@@ -66,9 +66,9 @@ memberReg : async(nickName, email, password, agreed) => {
 
 
 // 일반 캠핑장 검색
-    searchCampData : async(searchValue, currentData) => {
-        return await axios.get(domain + `/camp/searchData/${searchValue}/${currentData}`)
-    },
+    searchCampData : async(searchValue, currentData, page, size) => {
+            return await axios.get(domain + `/camp/searchData/${searchValue}/${currentData}/${page}/${size}`)
+        },
 // 날씨 가져오기
     getWeather : async(mapX, mapY, date) => {
         return await axios.get(domain + `/weather/getWeather/${mapX}/${mapY}/${date}`)
