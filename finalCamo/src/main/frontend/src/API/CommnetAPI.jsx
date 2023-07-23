@@ -4,9 +4,10 @@ export const COMMENT_API_URL = "";
 
   // 댓글 작성
 const CommentApi = {
-  createComment: async (token, reviewId, content) => {
+  createComment: async (token, reviewId, content, nickName) => {
     const comment = {
-      content: content
+      content: content,
+      nickName: nickName
     };
 
     try {

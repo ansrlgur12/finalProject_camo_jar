@@ -33,9 +33,9 @@ public class ReviewController {
     public ResponseEntity<?> createReview(@RequestBody ReviewDto reviewDto, @AuthenticationPrincipal UserDetails userDetails,
                                           HttpServletRequest request){
 
-     boolean isCreate = reviewService.createReview(reviewDto, request, userDetails);
-     if (isCreate) return new ResponseEntity<>("글 작성 성공", HttpStatus.OK);
-     else return new ResponseEntity<>("글 작성 실패", HttpStatus.NO_CONTENT);
+        boolean isCreate = reviewService.createReview(reviewDto, request, userDetails);
+        if (isCreate) return new ResponseEntity<>("글 작성 성공", HttpStatus.OK);
+        else return new ResponseEntity<>("글 작성 실패", HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -61,8 +61,8 @@ public class ReviewController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteReview(@PathVariable Long id,
-                                               @AuthenticationPrincipal UserDetails userDetails,
-                                               HttpServletRequest request) {
+                                          @AuthenticationPrincipal UserDetails userDetails,
+                                          HttpServletRequest request) {
         reviewService.deleteReview(id, request, userDetails);
 
         return new ResponseEntity<>("게시글 삭제", HttpStatus.ACCEPTED);
@@ -81,7 +81,7 @@ public class ReviewController {
     /**
      * 특정 회원이 작성한 리뷰 가져오기
      */
-    @GetMapping("/member/")
+    @GetMapping("/member/{id}")
     public ResponseEntity<List<ReviewDto>> getReviewsByMember(@AuthenticationPrincipal UserDetails userDetails,
                                                               HttpServletRequest request) {
         List<ReviewDto> reviews = reviewService.getReviewsByMember(request, userDetails);
@@ -93,8 +93,8 @@ public class ReviewController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<?> getReviewById(@PathVariable Long id,
-                                                   @AuthenticationPrincipal UserDetails userDetails,
-                                                   HttpServletRequest request) {
+                                           @AuthenticationPrincipal UserDetails userDetails,
+                                           HttpServletRequest request) {
         ReviewDto reviewDto = reviewService.getReviewById(id, request, userDetails);
         return ResponseEntity.ok(reviewDto);
     }

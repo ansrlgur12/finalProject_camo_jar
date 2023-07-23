@@ -45,12 +45,12 @@ export const SelectButton = () => {
     <ButtonStyle>
       <div className="centered-div">
         <Link to="/reviewCards">
-          <Button className="large-button">
+          <Button className="large-button" style={{backgroundColor: '#2D6247', color: 'white', borderColor: 'white'}}>
             캠핑 정보
           </Button>
         </Link>
         <Link to="/buySellCards">
-          <Button className="large-button">
+          <Button className="large-button" style={{backgroundColor: '#2D6247', color: 'white', borderColor: 'white'}}>
             사고 팔기
           </Button>
         </Link>

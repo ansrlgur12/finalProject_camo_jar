@@ -50,6 +50,7 @@ public class CommentService {
         comment.setReview(review);
         comment.setMember(member);
         comment.setContent(commentDto.getContent());
+        comment.setNickName(commentDto.getNickName());
         comment.setCreatedAt(LocalDateTime.now());
 
         Comment savedComment = commentRepository.save(comment);
@@ -65,7 +66,7 @@ public class CommentService {
      * 특정 회원 댓글 수정
      */
     public boolean updateComment(Long id, CommentDto commentDto,
-                                    HttpServletRequest request, UserDetails userDetails) {
+                                 HttpServletRequest request, UserDetails userDetails) {
 
         Member member = authService.validateTokenAndGetUser(request, userDetails);
 
@@ -121,6 +122,7 @@ public class CommentService {
                     .reviewId(comment.getReview().getId())
                     .memberId(comment.getMember().getId())
                     .content(comment.getContent())
+                    .nickName(comment.getNickName())
                     .createdAt(comment.getCreatedAt())
                     .build();
             commentDtos.add(commentDto);
@@ -143,6 +145,8 @@ public class CommentService {
                     .reviewId(comment.getReview().getId())
                     .memberId(comment.getMember().getId())
                     .content(comment.getContent())
+                    .nickName(comment.getNickName())
+                    .userImg(comment.getUserImg())
                     .createdAt(comment.getCreatedAt())
                     .build();
             commentDtoList.add(commentDto);

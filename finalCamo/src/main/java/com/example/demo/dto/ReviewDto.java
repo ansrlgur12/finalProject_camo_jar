@@ -19,4 +19,6 @@ public class ReviewDto {
     private int postType;
     private Long viewCount;
     private String img;
+    private String userImg;
+    private String nickName;
 }

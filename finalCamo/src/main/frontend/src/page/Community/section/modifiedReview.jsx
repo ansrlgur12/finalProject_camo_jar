@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Modal, Layout, Input, Select } from 'antd';
@@ -7,53 +7,30 @@ import styled, { createGlobalStyle } from 'styled-components';
 import ReviewApi from '../../../API/ReviewAPI';
 import Header from '../../../main/header';
 import Functions from '../../../Functions';
+import AxiosApi from '../../../API/TestAxios';
+import { storage } from '../../../firebase/firebaseConfig';
 
 const { Content } = Layout;
 const { Option } = Select;
 
 
-const StyledButton = styled.div`
-  background: #2D6247;
-  color:#fff;
-  border-radius:4px;
-  max-width: 80px;
-  text-align: center;
-  margin-left: 4rem;
-  @media (max-width: 768px) {
-    width:20vw;
-    margin-left: 4rem;
-    text-align: center;
-  }
-`
-
-const StyledModal = styled(Modal)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 768px) {
-  .ant-modal-content {
-
-    margin-top: 8rem;
-  }
-}
-`;
-
 const GlobalStyle = createGlobalStyle`
+
   .ck-editor__editable {
-    height: 58vh;
-    width: 39.5vw;
+    height: 500px;
+
   }
 
  h2{
   text-align: center;
-  margin-right: 37.5rem;
+  margin-right: 34rem;
  }
   button.ant-btn{
     width: 6vw;
   background-color: #2D6247;
   display: flex;
   margin-top: 1rem;
-  margin-left: 67.5rem;
+  margin-left: 65.8rem;
   align-items: center;
   justify-content: center;
   color: #fff;
@@ -65,23 +42,22 @@ const GlobalStyle = createGlobalStyle`
   @media screen and (max-width:768px) {
     .ck-editor__editable {
       height: 40vh;
-      width: 79vw;
 
     }
     button.ant-btn{
       width: 23vw;
-      margin-left: 13.8rem;
+      margin-left: 14rem;
   }
   h2{
   text-align: left;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
   white-space: nowrap;
  }
 }
 `;
 
 const ReviewContainer = styled.div`
-   max-width: 40vw;
+  max-width: 700px;
   margin: 0 auto;
   border: 2px solid #2D6247;
   border-radius: 6px;
@@ -94,106 +70,135 @@ const ReviewContainer = styled.div`
 
 const ModifiedReview = () => {
   const token = Functions.getAccessToken();
-  const { id } = useParams();
   const [data, setData] = useState('');
   const [title, setTitle] = useState('');
-  const [postType, setPostType] = useState(null);
+  const [postType, setPostType] = useState('카테고리를 선택해주세요');
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const nav = useNavigate();
+  const [image, setImage] = useState(null);
+  const [userImg, setUserImg] = useState('');
+  const [nickName, setNickName] = useState('');
 
   useEffect(() => {
-    const fetchReview = async () => {
+    const getUserInfo = async () => {
       try {
-        const response = await ReviewApi.getReviewById(token, id);
-        const reviewData = response.data;
-        setData(reviewData.content);
-        setTitle(reviewData.title);
-        setPostType(reviewData.postType);
+        const response = await AxiosApi.userInfoMe(token);
+        console.log(response)
+        setUserImg(response.data.userImg);
+        setNickName(response.data.nickName);
       } catch (error) {
-        console.error(error);
-      }
-    };
+        console.log(error);
 
-    fetchReview();
-  }, [token, id]);
-
-  const handleSubmit = async () => {
-    try {
-      const content = data;
-      const date = new Date().toISOString();
-      await ReviewApi.updateReview(token, id, title, content, date, postType);
-      setModalVisible(true);
-    } catch (error) {
-      console.log(error);
-      setError('리뷰 수정에 실패하였습니다.');
     }
   };
 
+  getUserInfo();
+}, [token]);
 
-  const closeModal = () => {
-    setModalVisible(false);
-  };
+const handleSubmit = async () => {
+  try {
 
-  return (
-    <Layout>
-      <GlobalStyle />
-      <Header />
-      <Content style={{  padding: '2rem', position: 'relative', backgroundColor: '#FFFFFF', marginTop: '4rem',display:'flex',justifyContent:'center',flexDirection:'column'}}>
-      <h2>수정하기</h2>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-        <ReviewContainer>
-          <Input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter title here"
-          />
-          <Select
-            style={{ width: '50%', borderRadius:'1px'}}
-            value={postType}
-            onChange={(value) => setPostType(value)}
-            placeholder="카테고리를 선택해주세요."
-          >
-            <Option value="1">유료캠핑장</Option>
-            <Option value="2">오지캠핑장</Option>
-          </Select>
-          <CKEditor
-            editor={ClassicEditor}
-            data={data}
-            config={{
-              toolbar: [
-                'heading',
-                '|',
-                'bold',
-                'italic',
-                'link',
-                'bulletedList',
-                'numberedList',
-                'blockQuote',
-              ],
-              ckfinder: {
-                uploadUrl: 'https://example.com/upload',
-              },
-            }}
-            onReady={(editor) => {
-              console.log('Editor is ready to use!', editor);
-            }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              console.log({ event, editor, data });
-              setData(data);
-            }}
-          />
+    const content = data;
+    const date = new Date().toISOString();
+    const viewCount = 0;
+    const img = image ? await uploadImage(image) : null;
 
-          <StyledModal visible={modalVisible} onCancel={closeModal} footer={null} title={"수정 완료"}>
-            <p>글이 성공적으로 수정되었습니다.</p>
-            <StyledButton  onClick={() => nav("/community")}>확인</StyledButton>
-          </StyledModal>
-        </ReviewContainer>
-        <Button onClick={handleSubmit}>수정하기</Button>
-      </Content>
-    </Layout>
-  );
+    await ReviewApi.createReview(token, title, content, date, postType, viewCount, img, userImg, nickName);
+
+    setModalVisible(true);
+  } catch (error) {
+    console.log(error);
+    setError('리뷰 작성에 실패하였습니다.');
+  }
+};
+
+const closeModal = () => {
+  setModalVisible(false);
+};
+
+const uploadImage = async (file) => {
+  try {
+    const storageRef = storage.ref();
+    const fileRef = storageRef.child(file.name);
+    await fileRef.put(file);
+    const downloadUrl = await fileRef.getDownloadURL();
+    return downloadUrl;
+  } catch (error) {
+    console.log(error);
+    throw new Error('이미지 업로드에 실패하였습니다.');
+  }
+};
+
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  setImage(file);
+};
+
+return (
+  <Layout>
+    <GlobalStyle />
+    <Header />
+    <Content style={{ padding: '2rem', position: 'relative', backgroundColor: '#FFFFFF', marginTop: '4rem',display:'flex',justifyContent:'center',flexDirection:'column' }}>
+    <h2>수정 하기</h2>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+      <ReviewContainer>
+        <Input
+          style={{borderRadius:'1px'}}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Enter title here"
+        />
+        <Select
+          style={{ width: '50%',borderRadius:'1px' }}
+          value={postType}
+          onChange={(value) => setPostType(value)}
+          placeholder="카테고리를 선택해주세요."
+        >
+          <Option value="1">캠핑 정보</Option>
+          <Option value="2">사고 팔기</Option>
+        </Select>
+        <input type="file" accept="image/*" onChange={handleFileChange} />
+        <CKEditor
+editor={ClassicEditor}
+data="글을 작성해주세요!"
+config={{
+  toolbar: [
+    'heading',
+    '|',
+    'bold',
+    'italic',
+    'link',
+    'bulletedList',
+    'numberedList',
+    'blockQuote',
+    'uploadImage'
+  ],
+  ckfinder: {
+    uploadUrl: 'https://example.com/upload',
+  },
+}}
+onReady={(editor) => {
+  console.log('Editor is ready to use!', editor);
+}}
+onChange={(event, editor) => {
+  let data = editor.getData();
+  data = data.replace(/<\/?p>/g, '');
+  console.log({ event, editor, data });
+  setData(data);
+}}
+/>
+
+
+        <Modal visible={modalVisible} onCancel={closeModal} footer={null}>
+          <h3>작성 완료</h3>
+          <p>글이 성공적으로 작성되었습니다.</p>
+          <Link to="/community">확인</Link>
+        </Modal>
+      </ReviewContainer>
+      <Button onClick={handleSubmit} style={{backgroundColor: '#2D6247', color: 'white', borderColor: 'white'}}>수정하기</Button>
+    </Content>
+  </Layout>
+);
 };
 
 export default ModifiedReview;

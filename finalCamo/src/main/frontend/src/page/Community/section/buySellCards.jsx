@@ -4,7 +4,6 @@ import { HeartOutlined, EyeFilled, EditOutlined } from '@ant-design/icons';
 import { Avatar, Card, Row, Col, Layout, Pagination, message } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import profile from '../../../images/profile.png';
 import 사고팔기1header from '../../../images/사고팔기1header.jpg';
 import ReviewApi from '../../../API/ReviewAPI';
 import LikesApi from '../../../API/LikesAPI';
@@ -16,8 +15,8 @@ const { Meta } = Card;
 const { Content } = Layout;
 
 const ResponsiveMeta = styled(Meta)`
-  
-  
+
+
   @media (max-width: 768px) {
     text-align: center;
     font-size:0.1rem;
@@ -38,7 +37,7 @@ const ResponsiveImage = styled.img`
   width: 100%;
   height: 23vh;
   object-fit: cover;
- 
+
 
   @media (max-width: 768px) {
     height: 10vh;
@@ -49,6 +48,14 @@ const ReviewContent = styled(Card)`
   margin: 0 auto;
   margin-bottom: 40px;
   border: 1px solid #DDDDDD;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);  // 기본 상태에서의 그림자 효과
+  transition: box-shadow 0.3s ease, transform 0.3s ease;  // 그림자와 변환 효과에 대한 전환 효과 적용
+
+  &:hover {
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);  // 마우스 호버 상태에서의 그림자 효과
+    transform: translateY(-10px);  // 마우스 호버 상태에서 카드를 약간 위로 이동
+  }
+
   @media screen and (max-width:768px) {
     width:42vw;
     height: 31vh;
@@ -73,7 +80,7 @@ const WriteButton = styled(Link)`
     width:20vw;
     white-space: nowrap;
     padding: 0.4rem 0.6rem;
-    
+
   }
 `;
 
@@ -117,7 +124,7 @@ const BuySellCards = () => {
     };
 
     fetchReviews();
-  }, []);
+  }, [token]);
 
   const renderReviewCards = () => {
     return reviews.map((review, index) => {
@@ -130,7 +137,7 @@ const BuySellCards = () => {
         postTypeText = <p>사고 팔기</p>;
       }
 
-      const memberProfileImg = review.member ? review.member.profileImg : '';
+
 
       return (
         <Col xs={12} md={6}  key={index}>
@@ -140,7 +147,7 @@ const BuySellCards = () => {
                <ResponsiveImage
                   src={review.img}
                   alt="대표이미지"
-                  
+
                 />
               </Link>
             }
@@ -150,9 +157,9 @@ const BuySellCards = () => {
             ]}
           >
             <ResponsiveMeta
-              avatar={<Avatar src={userImg} />}
+              avatar={<Avatar src={review.userImg} />}
               title={review.title}
-              description={`작성자: ${nickName}`} 
+              description={`작성자: ${review.nickName}`}
             />
             {postTypeText}
           </ReviewContent>
@@ -173,7 +180,7 @@ const BuySellCards = () => {
     <SelectButton />
     <Layout>
       <ResponsiveContent >
-        <WriteButton to="/writeReviewPage">작성하기<EditOutlined style={{ marginLeft: '5px' }} /></WriteButton>
+        <WriteButton to="/writeReviewPage" style={{backgroundColor: '#2D6247', color: 'white', borderColor: 'white'}}>작성하기<EditOutlined style={{ marginLeft: '5px' }} /></WriteButton>
         <Row gutter={[10, 15]}>
           {reviews.length > 0 ? renderReviewCards() : <p>리뷰가 없습니다.</p>}
         </Row>
