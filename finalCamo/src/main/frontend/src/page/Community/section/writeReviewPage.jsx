@@ -1,61 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Modal, Layout, Input, Select } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 import ReviewApi from '../../../API/ReviewAPI';
 import Header from '../../../main/header';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { storage } from '../../../firebase/firebaseConfig';
 import Functions from '../../../Functions';
+import AxiosApi from '../../../API/TestAxios';
 
 const { Content } = Layout;
 const { Option } = Select;
 
-
-
-const StyledButton = styled.div`
-  background: #2D6247;
-  color:#fff;
-  border-radius:4px;
-  max-width: 80px;
-  text-align: center;
-  margin-left: 4rem;
-  @media (max-width: 768px) {
-    width:20vw;
-    margin-left: 4rem;
-    text-align: center;
-  }
-`
-
-const StyledModal = styled(Modal)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 768px) {
-  .ant-modal-content {
-    margin-top: 8rem;
-  }
-}
-`
-
 const GlobalStyle = createGlobalStyle`
 
   .ck-editor__editable {
-    height: 58vh;
-    width: 39.5vw;
+    height: 500px;
+
   }
 
  h2{
   text-align: center;
-  margin-right: 37rem;
+  margin-right: 34rem;
  }
   button.ant-btn{
     width: 6vw;
   background-color: #2D6247;
   display: flex;
   margin-top: 1rem;
-  margin-left: 67rem;
+  margin-left: 65.8rem;
   align-items: center;
   justify-content: center;
   color: #fff;
@@ -67,7 +41,6 @@ const GlobalStyle = createGlobalStyle`
   @media screen and (max-width:768px) {
     .ck-editor__editable {
       height: 40vh;
-      width: 79vw;
 
     }
     button.ant-btn{
@@ -83,7 +56,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const ReviewContainer = styled.div`
-  max-width: 40vw;
+  max-width: 700px;
   margin: 0 auto;
   border: 2px solid #2D6247;
   border-radius: 6px;
@@ -102,16 +75,35 @@ const WriteReviewPage = () => {
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState(null);
-  const nav =  useNavigate();
+  const [userImg, setUserImg] = useState('');
+  const [nickName, setNickName] = useState('');
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const response = await AxiosApi.userInfoMe(token);
+        console.log(response)
+        setUserImg(response.data.userImg);
+        setNickName(response.data.nickName);
+      } catch (error) {
+        console.log(error);
+
+    }
+  };
+
+  getUserInfo();
+}, [token]);
+
 
   const handleSubmit = async () => {
     try {
+
       const content = data;
       const date = new Date().toISOString();
       const viewCount = 0;
       const img = image ? await uploadImage(image) : null;
 
-      await ReviewApi.createReview(token, title, content, date, postType, viewCount, img);
+      await ReviewApi.createReview(token, title, content, date, postType, viewCount, img, userImg, nickName);
 
       setModalVisible(true);
     } catch (error) {
@@ -190,19 +182,20 @@ const WriteReviewPage = () => {
   }}
   onChange={(event, editor) => {
     let data = editor.getData();
-    data = data.replace(/<\/?p>/g, ''); // Add this line
+    data = data.replace(/<\/?p>/g, '');
     console.log({ event, editor, data });
     setData(data);
   }}
 />
 
 
-          <StyledModal  visible={modalVisible} onCancel={closeModal} footer={null} title={"작성 완료"}>
+          <Modal visible={modalVisible} onCancel={closeModal} footer={null}>
+            <h3>작성 완료</h3>
             <p>글이 성공적으로 작성되었습니다.</p>
-            <StyledButton onClick={() => nav("/community")}>확인</StyledButton>
-          </StyledModal>
+            <Link to="/community">확인</Link>
+          </Modal>
         </ReviewContainer>
-        <Button onClick={handleSubmit}>작성하기</Button>
+        <Button onClick={handleSubmit} style={{backgroundColor: '#2D6247', color: 'white', borderColor: 'white'}}>작성하기</Button>
       </Content>
     </Layout>
   );

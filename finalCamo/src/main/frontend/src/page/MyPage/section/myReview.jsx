@@ -14,6 +14,7 @@ import Functions from '../../../Functions';
 import MyPageImageBar from './myPageImage';
 import { ImageFlexBox } from './cart';
 import { SidebarContainer } from './cart';
+import AxiosApi from '../../../API/TestAxios';
 
 const { Meta } = Card;
 const { Content } = Layout;
@@ -55,16 +56,31 @@ const Title = styled.h2`
 const MyReview = () => {
   const token = Functions.getAccessToken();
   const [posts, setPosts] = useState([]);
+  const [nickName, setNickName] = useState('');
 
   useEffect(() => {
-    fetchPostsByMember(token);
-  }, []);
+    const getUserInfo = async () => {
+      try {
+        const response = await AxiosApi.userInfoMe(token);
+        console.log(response)
+        setNickName(response.data.nickName);
+        fetchPostsByMember(response.data.nickName);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  const fetchPostsByMember = async () => {
+    getUserInfo();
+  }, [token]);
+
+  const fetchPostsByMember = async (nickName) => {
     try {
       const response = await ReviewApi.getReviewsByMember(token);
       const data = response.data;
-      setPosts(data);
+
+      const userPosts = data.filter(post => post.nickName === nickName);
+
+      setPosts(userPosts);
     } catch (error) {
       console.log(error);
     }

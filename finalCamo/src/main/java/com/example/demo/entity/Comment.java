@@ -33,6 +33,12 @@ public class Comment {
     @Column(nullable = false)
     private String content; //댓글 내용
 
+    @Column
+    private String nickName; //댓글 내용
+
+    @Column
+    private String userImg;
+
     @Column(nullable = false)
     private LocalDateTime createdAt; //작성일자
 }

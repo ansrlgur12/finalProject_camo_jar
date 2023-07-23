@@ -56,6 +56,8 @@ public class ReviewService {
         review.setPostType(reviewDto.getPostType());
         review.setViewCount(reviewDto.getViewCount());
         review.setImg(reviewDto.getImg());
+        review.setNickName(reviewDto.getNickName());
+        review.setUserImg(reviewDto.getUserImg());
 
         Review savedReview = reviewRepository.save(review);
         return savedReview != null;
@@ -90,6 +92,8 @@ public class ReviewService {
                 .date(updatedReview.getDate())
                 .postType(updatedReview.getPostType())
                 .img(updatedReview.getImg())
+                .img(review.getUserImg())
+                .img(review.getNickName())
                 .viewCount(review.getViewCount() + 1)
                 .build();
     }
@@ -132,6 +136,8 @@ public class ReviewService {
                     .date(review.getDate())
                     .postType(review.getPostType())
                     .img(review.getImg())
+                    .userImg(review.getUserImg())
+                    .nickName(review.getNickName())
                     .viewCount(review.getViewCount() + 1)
                     .build();
             reviewDtoList.add(reviewDto);

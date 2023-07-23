@@ -13,11 +13,11 @@ const AxiosApi = {
 
         return await axios.get(domain + `/camp/campData/${dho}/${sigungu}`)
     },
-    
+
     getItemList : async() => {
         return await axios.get(domain+ "/product")
     },
-    
+
 
 
 
@@ -33,7 +33,7 @@ const AxiosApi = {
 
     productDetail : async(id) =>{
         return await axios.get(domain+ `/productDetail/${id}`)
-    
+
     },
 
 //회원 가입
@@ -72,7 +72,7 @@ memberReg : async(nickName, email, password, agreed) => {
 // 날씨 가져오기
     getWeather : async(mapX, mapY, date) => {
         return await axios.get(domain + `/weather/getWeather/${mapX}/${mapY}/${date}`)
-    },                        
+    },
 // 조회수
     viewCount : async(facltNm) => {
         return await axios.get(domain + `/camp/viewCount/${facltNm}`);
@@ -91,6 +91,21 @@ memberReg : async(nickName, email, password, agreed) => {
         }
         return await axios.get(domain + "/api/v1/intro/nickName", check);
     },
+
+    // 사용자 ID를 이용해서 회원 정보를 조회
+    userInfoMe : async(token)=> {
+        try {
+            return await axios.get(domain + "/api/v1/intro/me", {
+              headers: {
+              'Content-Type': 'application/json',
+             'Authorization': 'Bearer ' + token
+             }
+         });
+        } catch (error) {
+          throw error;
+         }
+        },
+
     // 회원 정보 조회
     userInfo : async(token)=> {
          try {
