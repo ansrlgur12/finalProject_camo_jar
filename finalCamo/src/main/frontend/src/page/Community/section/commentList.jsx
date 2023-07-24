@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { List, Button, Popconfirm, message, Modal, Input, Form } from 'antd';
-import CommentApi from '../../../API/CommnetAPI';
+import CommentApi from '../../../API/CommentAPI';
 import Functions from '../../../Functions';
 import styled from 'styled-components';
 import AxiosApi from '../../../API/TestAxios';
