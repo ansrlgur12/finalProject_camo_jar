@@ -215,30 +215,45 @@ memberReg : async(nickName, email, password, agreed) => {
         return await axios.post (domain + `/cart/updateItem/${cartItemId}`, item)
     },
     // 오지캠핑 데이터 db에 저장
-    onojiCampData : async(token, mapX, mapY, sbrsCl, doNm, sigunguNm, facltNm, diff, intro, addr1, url) => {
-        const data = {
-            addr1 : addr1,
-            mapX : mapX,
-            mapY : mapY,
-            sbrsCl : sbrsCl,
-            doNm : doNm,
-            sigunguNm : sigunguNm,
-            facltNm : facltNm,
-            diff : diff.toString(),
-            intro : intro,
-            url : url
-        };
-        try{
-            return await axios.post(domain + '/oji/newMark', data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                  }
-            });
-        }catch(error) {
-            throw error;
-        }
-    },
+   onojiCampData : async(token, mapX, mapY, sbrsCl, doNm, sigunguNm, facltNm, diff, intro, addr1, url) => {
+           console.log("axios 넘기는 내용들")
+           console.log(token);
+           console.log(mapX);
+           console.log(mapY);
+           console.log(sbrsCl);
+           console.log(doNm);
+           console.log(sigunguNm);
+           console.log(facltNm);
+           console.log(diff);
+           console.log(intro);
+           console.log(addr1);
+           console.log(url);
+
+           const data = {
+               addr1 : addr1,
+               mapX : mapX,
+               mapY : mapY,
+               sbrsCl : sbrsCl,
+               doNm : doNm,
+               sigunguNm : sigunguNm,
+               facltNm : facltNm,
+               diff : diff.toString(),
+               intro : intro,
+               url : url
+           };
+           try{
+               console.log("data")
+               console.log(data);
+               return await axios.post(domain + '/oji/newMark', data, {
+                   headers: {
+                       'Content-Type': 'application/json',
+                       'Authorization': 'Bearer ' + token
+                     }
+               });
+           }catch(error) {
+               throw error;
+           }
+       },
   // 찜하기
   addToFavorite : async(productId,email) => {
     const item = {
