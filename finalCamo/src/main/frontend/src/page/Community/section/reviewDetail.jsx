@@ -126,6 +126,7 @@ const ReviewDetail = () => {
   const [liked, setLiked] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { id } = useParams();
+  const nav = useNavigate();
 
   useEffect(() => {
     const fetchReview = async () => {
