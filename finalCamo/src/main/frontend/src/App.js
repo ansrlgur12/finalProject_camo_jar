@@ -47,7 +47,7 @@ import MobileFavorite from './page/MyPage/section/mobileFavorite';
 import styled from '@emotion/styled';
 
 const AppFontStyle = styled.div`
-font-family: 'GongGothicMedium';
+font-family: 'Pretendard-Regular';
 `;
 
 function App() {
