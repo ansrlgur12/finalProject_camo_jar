@@ -17,14 +17,14 @@ public interface CampRepository extends JpaRepository<Camp, Long> {
 
     List<Camp> findByMapXAndMapY(String mapX, String mapY);
 
-    List<Camp> findByFacltNmContaining(String facltNm, Pageable pageable);
+    Page<Camp> findByFacltNmContaining(String facltNm, Pageable pageable);
 
-    List<Camp> findByAnimalCmgClNotContainingAndFacltNmContaining(String animalCmgCl, String facltNm, Pageable pageable);
+    Page<Camp> findByAnimalCmgClNotContainingAndFacltNmContaining(String animalCmgCl, String facltNm, Pageable pageable);
 
     //검색바
-    List<Camp> findTop32ByOrderById();
-    List<Camp> findTop32ByDoNmContainingAndSigunguNmContaining(String doNm, String sigunguNm);
-    List<Camp> findTop32ByDoNmContaining(String doNm);
+    List<Camp> findTop10ByOrderByCreatedtimeDesc();
+    List<Camp> findTop10ByOrderByLikesDesc();
+    List<Camp> findTop10ByOrderByViewCountDesc();
     List<Camp> findTop32ByAnimalCmgClNot(String animalCmgCl);
     List<Camp> findTop32ByDoNmContainingAndSigunguNmContainingAndAnimalCmgClNotContaining(String doNm, String sigunguNm, String animalCmgCl);
     List<Camp> findTop32ByDoNmContainingAndAnimalCmgClNotContaining(String doNm, String animalCmgCl);

@@ -48,7 +48,7 @@ import styled from '@emotion/styled';
 import FindAccount from './main/login/findAccount';
 
 const AppFontStyle = styled.div`
-font-family: 'GongGothicMedium';
+font-family: 'Pretendard-Regular';
 `;
 
 function App() {

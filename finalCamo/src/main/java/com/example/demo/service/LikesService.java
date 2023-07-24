@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -270,6 +271,7 @@ public class LikesService {
         Member member = authService.validateTokenAndGetUser(request, userDetails);
         List<Camp> likedCamps = member.getLikes().stream()
                 .map(Likes::getCamp)
+                .filter(Objects::nonNull) // null인 요소들을 걸러냄
                 .collect(Collectors.toList());
 
         List<CampDto> campDtos = likedCamps.stream()

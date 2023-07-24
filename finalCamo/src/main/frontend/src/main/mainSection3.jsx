@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 import AxiosApi from "../API/TestAxios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import CampCard from "./CampCard";
 import { MarkerContext } from "../context/MarkerInfo";
 import "../font.css";
+import noImage from "../images/CAMOLOGO.png"
 
 const Section3 = styled.div`
     font-family: 'LINESeedKR-Bd';
@@ -42,12 +42,25 @@ const Section3 = styled.div`
         background-color: #f3f3f3;
     }
     .menuChoice{
-        
+
         margin: 0;
     }
     .topNav{
         display: flex;
         margin: 0;
+        justify-content: space-between;
+    }
+    .topBtn{
+        display: flex;
+    }
+    .topTitle{
+        font-size: 1.5em;
+        color: #56966b;
+        margin-bottom: .5em;
+        .colored{
+            color: black;
+            font-size: 1.2em;
+        }
     }
     .sTop{
         width: 90vw;
@@ -62,6 +75,7 @@ const Section3 = styled.div`
         align-items: end;
     }
     .sBottom{
+        margin-left: 1.5vw;
         background-color: #f3f3f3;
         height: auto;
         margin-top: 0;
@@ -101,7 +115,7 @@ const Section3 = styled.div`
     padding: 15px 3px;
     border-radius: 20px;
     color: white !important;
-    
+
 
     }
     .swiper-button-prev:after,
@@ -137,9 +151,15 @@ const Section3 = styled.div`
     }
 
     .sortBy{
-        width: 15vw;
+        width: 10vw;
         font-size: .7em;
         height: 4vw;
+    }
+    .topNav{
+        align-items: center;
+    }
+    .topTitle{
+        font-size: .7em;
     }
 }
 `;
@@ -154,7 +174,7 @@ box-shadow: 1px 2px 5px gray;
     width: 25vw;
     height: 25vw;
     /* margin-top: .5em; */
-    
+
 }
 
 
@@ -183,7 +203,7 @@ const CampDesc = styled.div`
     @media screen and (max-width: 768px) {
       font-size: .4em;
       margin: 0 .5em 0em .5em;
-      
+
     }
 `;
 const CampDescSection = styled.div`
@@ -193,13 +213,13 @@ const CampDescSection = styled.div`
     font-size: 1.2em;
     .num{
         margin-left: .5em;
-        
+
     }
     @media screen and (max-width: 768px) {
       margin-bottom: .5em;
       line-height: .7;
     }
-    
+
 `;
 const CampDescSection2 = styled.div`
     color: white;
@@ -208,13 +228,13 @@ const CampDescSection2 = styled.div`
     font-size: 1.2em;
     .num{
         margin-left: .5em;
-        
+
     }
     @media screen and (max-width: 768px) {
       margin-bottom: .5em;
       line-height: .1;
     }
-    
+
 `;
 
 const MainSection3 = (props) => {
@@ -223,17 +243,11 @@ const MainSection3 = (props) => {
     const {setOverlayOpen, setLocation, setZoomLev, setMarkerLat, setMarkerLng} = context;
     const [campData, setCampData] = useState([]);
     const [myLoc, setMyLoc] = useState([]);
-    const [selectedSortBy, setSelectedSortBy] = useState("이름순");
+    const [selectedSortBy, setSelectedSortBy] = useState("인기순");
 
     useEffect(()=>{
       const getCampCard = async() => {
-          const rsp = await AxiosApi.getCampData("ALL", "시.군.구");
-        //   if(rsp.status === 200){
-        //     if(rsp.data && rsp.data.length > 0) {
-        //     const rsp2 = await AxiosApi.viewCampLike(rsp.data[0].id);
-        //     setCount(rsp2.data);
-        //     }
-        //   }
+          const rsp = await AxiosApi.getCampData(selectedSortBy);
           console.log(rsp.data);
           setCampData(rsp.data);
           navigator.geolocation.getCurrentPosition(
@@ -248,8 +262,8 @@ const MainSection3 = (props) => {
 
       }
       getCampCard();
-      
-    },[])
+
+    },[selectedSortBy])
 
     const calculateDistance = (camp) => {
         if (campData && campData.length > 0) {
@@ -258,16 +272,16 @@ const MainSection3 = (props) => {
           const lon1 = myLoc[1];
           const lat2 = camp.mapY;
           const lon2 = camp.mapX;
-      
+
           const dLat = deg2rad(lat2 - lat1);
           const dLon = deg2rad(lon2 - lon1);
-      
+
           const a =
             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
           const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
           const distance = R * c;
-      
+
           return `${distance.toFixed(2)} km`;
         }
         return "";
@@ -280,20 +294,6 @@ const MainSection3 = (props) => {
       const handleSortByClick = (sortBy) => {
         setSelectedSortBy(sortBy);
       };
-
-      const sortCamps = (camps) => {
-        switch (selectedSortBy) {
-          case '이름순':
-            return [...camps].sort((a, b) => a.facltNm.localeCompare(b.facltNm));
-          case '등록순':
-            return [...camps].sort((a, b) => new Date(b.createdtime) - new Date(a.createdtime));
-          case '인기순':
-            return [...camps].sort((a, b) => Number(b.likes) - Number(a.likes));
-          default:
-            return [...camps];
-        }
-      };
-      const sortedCamps = sortCamps(campData);
 
       const onClickImage = (x, y) => {
         nav("/mapMain");
@@ -308,9 +308,12 @@ const MainSection3 = (props) => {
         <Section3>
             <div className="select">
                     <div className="topNav">
-                        <div className={`sortBy ${selectedSortBy === '이름순' ? 'selected' : ''}`} onClick={() => handleSortByClick('이름순')}>이름순</div>
-                        <div className={`sortBy ${selectedSortBy === '등록순' ? 'selected' : ''}`} onClick={() => handleSortByClick('등록순')}>최신순</div>
-                        <div className={`sortBy ${selectedSortBy === '인기순' ? 'selected' : ''}`} onClick={() => handleSortByClick('인기순')}>추천순</div>
+                        <div className="topTitle">Camo's <span className="colored">Top 10 캠핑장</span></div>
+                        <div className="topBtn">
+                        <div className={`sortBy ${selectedSortBy === '인기순' ? 'selected' : ''}`} onClick={() => handleSortByClick('인기순')}>인기순</div>
+                        <div className={`sortBy ${selectedSortBy === '조회순' ? 'selected' : ''}`} onClick={() => handleSortByClick('조회순')}>조회순</div>
+                        <div className={`sortBy ${selectedSortBy === '최신순' ? 'selected' : ''}`} onClick={() => handleSortByClick('최신순')}>최신순</div>
+                        </div>
                     </div>
                 <div className="sBottom">
                         <Swiper
@@ -322,10 +325,10 @@ const MainSection3 = (props) => {
                             keyboard={{enable:true}}
                             // scrollbar={{ draggable: true }}
                         >
-                            
-                            {sortedCamps && sortedCamps.map((camp)=>(
+
+                            {campData && campData.map((camp)=>(
                             <SwiperSlide>
-                            <CardContainer  style={{backgroundImage: `url(${camp.firstImageUrl})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', cursor: 'pointer'}} onClick={()=>onClickImage(camp.mapX, camp.mapY)}>
+                            <CardContainer  style={{backgroundImage: `url(${camp.firstImageUrl ? camp.firstImageUrl : noImage})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', cursor: 'pointer'}} onClick={()=>onClickImage(camp.mapX, camp.mapY)}>
                                 <CardDesc>
                                     <Title>{camp.facltNm.length > 8 ? camp.facltNm.substring(0, 8) + "..." : camp.facltNm}</Title>
                                     <CampDesc>
@@ -336,7 +339,7 @@ const MainSection3 = (props) => {
                             </CardContainer>
                             </SwiperSlide>
                             ))}
-                            
+
                         </Swiper>
                     </div>
             </div>
@@ -345,19 +348,3 @@ const MainSection3 = (props) => {
 };
 
 export default MainSection3;
-/*
-            <EventDescStyle>
-                {eventList && eventList.map(event => (
-                    <div className="eContainer" key={event.eventNum} onClick={()=>onClick(event.eventNum)}>
-                        <div className="eventWarp">
-                            <div className="eventPost" style={{backgroundImage: `url(${event.eventImg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}></div>
-                            <div className="eNum">{event.eventNum}</div>
-                            <div className="eTitle">{event.eventTitle}</div><br/>
-                                <p className="eDate">
-                                {event.startEvent} ~ {event.endEvent}
-                                </p>
-                        </div>
-                    </div>
-                ))}
-            </EventDescStyle>
-*/

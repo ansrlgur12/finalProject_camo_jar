@@ -11,7 +11,7 @@ import 'swiper/css/autoplay'
 export const Section1 = styled.div`
     display: flex;
     justify-content: center;
-    font-family: "Nanum Myeongjo";
+    font-family: "InkLipquid";
 
     .backImg {
         width: 100vw;
@@ -30,7 +30,7 @@ export const Section1 = styled.div`
         top: 50%;
         left: 30vw;
         z-index: 1;
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: rgb(186, 210, 170);
         font-weight: bold;
         position: absolute;
@@ -42,7 +42,7 @@ export const Section1 = styled.div`
     .mainText2 {
         left: 30vw;
         z-index: 1;
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: rgb(186, 210, 170);
         font-weight: bold;
         position: absolute;
@@ -55,7 +55,7 @@ export const Section1 = styled.div`
         top: 50%;
         left: 30vw;
         z-index: 1;
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: rgb(186, 210, 170);
         font-weight: bold;
         position: absolute;
@@ -64,7 +64,9 @@ export const Section1 = styled.div`
         text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6); /* 테두리 색과 크기 설정 */
         transition: opacity 0.6s ease, top 0.6s ease-in; /* 애니메이션 효과 설정 */
     }
-    
+    .text1{
+        font-size: 1.5rem;
+    }
     .text2, .text3{
         color: white;
         text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* 테두리 색과 크기 설정 */
@@ -118,19 +120,19 @@ export const Section1 = styled.div`
             margin-left: 7vw;
             margin-top: 7vh;
             z-index: 1;
-            font-size: 1.1rem;
+            font-size: 2rem;
             font-weight: bold;
             position: absolute;
             transform: translate(-50%, -50%);
             opacity: 0; /* 초기에 텍스트를 숨김 */
             transition: opacity 0.6s ease, top 0.6s ease-in; /* 애니메이션 효과 설정 */
-        } 
+        }
         .mainText2 {
             margin-left: 20vw;
             margin-top: 5vh;
             z-index: 1;
             width: 90vw;
-            font-size: 0.9rem;
+            font-size: 2rem;
             color: rgb(186, 210, 170);
             font-weight: bold;
             position: absolute;
@@ -144,7 +146,7 @@ export const Section1 = styled.div`
             margin-left: 15vw;
             margin-top: 7vh;
             z-index: 1;
-            font-size: 0.9rem;
+            font-size: 2rem;
             font-weight: bold;
             position: absolute;
             transform: translate(-50%, -50%);
@@ -184,7 +186,7 @@ const MainSection1 = () => {
     const slideChangeEnd = () => {
         setShowText(true);
     }
-    
+
 
     return (
         <Section1>
@@ -208,32 +210,30 @@ const MainSection1 = () => {
                     <SwiperSlide>
                         <img src={backImg1} alt=""/>
                         <div className={`mainText ${showText ? 'show' : ''}`} >
-                            <p className="textTitle">
-                                '자연과 하나가 되십시오'
-                                <br/>
-                                완벽한 여행을 위해 필요한 것이 있습니다.
-                            </p>
+                        <p className="textTitle">
+                        바보는 방황하고 현명한 사람은 여행한다.
+
+                        <p className="textTitle text1"> -Thomas Fuller-</p>
+                        </p>
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
                         <img src={backImg2} alt=""/>
                         <div className={`mainText2 ${showText ? 'show' : ''}`} >
-                            <p className="textTitle text2">
-                                도시의 소음과 시간의 구속을 벗어나,
-                                <br/>
-                                자연과 조화로운 휴식과 자유를 선사하는
-                                <br/>
-                                특별한 여정을 떠나보세요.
-                            </p>
+                        <p className="textTitle text2">
+                        여행은 언제나 돈이 문제가 아니고 용기의 문제이다.
+
+                                <p className="textTitle text1">
+                                -Paulo Coelho-
+                            </p> </p>
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
                         <img src={backImg3} alt=""/>
                         <div className={`mainText3 ${showText ? 'show' : ''}`} >
                             <p className="textTitle text3">
-                                자연 속에서 불을 지피고 별을 바라보며, 
-                                <br/>
-                                내 안에 잠든 평화를 깨워보아요.
+                            여행은 정신을 다시 젊어지게 하는 샘이다.
+                              <p className="textTitle text1">   -Hans Christian Anderson-</p>
                             </p>
                         </div>
                     </SwiperSlide>

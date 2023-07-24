@@ -9,9 +9,9 @@ const AxiosApi = {
         return await axios.get(domain + "/camp/camping-data")
     },
 // 캠핑데이터 가져오기
-    getCampData : async(dho, sigungu) => {
+    getCampData : async(sortBy) => {
 
-        return await axios.get(domain + `/camp/campData/${dho}/${sigungu}`)
+        return await axios.get(domain + `/camp/campData/${sortBy}`)
     },
 
     getItemList : async() => {

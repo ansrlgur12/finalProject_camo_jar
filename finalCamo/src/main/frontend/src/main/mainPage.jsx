@@ -10,7 +10,7 @@ import MainSection2 from './mainSection2';
 import "../font.css";
 
 export const MainPageStyle = styled.div`
-    font-family: 'GeekbleMalang2WOFF2';
+    font-family: 'NanumSquareNeo-Variable';
 `;
 
 
