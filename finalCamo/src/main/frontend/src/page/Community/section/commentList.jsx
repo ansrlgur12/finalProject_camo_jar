@@ -5,6 +5,20 @@ import Functions from '../../../Functions';
 import styled from 'styled-components';
 import AxiosApi from '../../../API/TestAxios';
 
+const StyledModal = styled(Modal)`
+  width: 400px;
+  @media (max-width: 768px) {
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  .ant-modal-content {
+    width: 70vw;
+    margin-top: 8rem;
+    margin-right: 5.5rem;
+  }
+}
+`;
+
 const ResponsiveButton = styled(Button)`
    @media screen and (max-width:768px) {
     width:10vw;
@@ -146,9 +160,9 @@ const CommentList = ({ reviewId }) => {
           </List.Item>
         )}
       >
-        <Modal title="댓글 수정" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <StyledModal title="댓글 수정" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
           <Input.TextArea value={editingContent} onChange={e => setEditingContent(e.target.value)} />
-        </Modal>
+        </StyledModal>
       </List>
     </>
   );
