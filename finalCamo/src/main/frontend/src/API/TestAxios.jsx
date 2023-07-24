@@ -9,9 +9,9 @@ const AxiosApi = {
         return await axios.get(domain + "/camp/camping-data")
     },
 // 캠핑데이터 가져오기
-    getCampData : async(dho, sigungu) => {
+    getCampData : async(sortBy) => {
 
-        return await axios.get(domain + `/camp/campData/${dho}/${sigungu}`)
+        return await axios.get(domain + `/camp/campData/${sortBy}`)
     },
 
     getItemList : async() => {
@@ -48,6 +48,17 @@ memberReg : async(nickName, email, password, agreed) => {
 
 },
 
+//임시 비밀번호 전송 (여기부터 시작)
+newPassEmail : async(email) => {
+        try {
+          return await axios.get(domain + `/auth/password/${email}`, {
+
+          });
+        } catch (error) {
+          throw error;
+        }
+      },
+
 
 // 캠핑데이터 오버레이 띄우기
     getOverlayInfo : async(xValue, yValue) => {
@@ -67,8 +78,8 @@ memberReg : async(nickName, email, password, agreed) => {
 
 // 일반 캠핑장 검색
     searchCampData : async(searchValue, currentData, page, size) => {
-            return await axios.get(domain + `/camp/searchData/${searchValue}/${currentData}/${page}/${size}`)
-        },
+        return await axios.get(domain + `/camp/searchData/${searchValue}/${currentData}/${page}/${size}`)
+    },
 // 날씨 가져오기
     getWeather : async(mapX, mapY, date) => {
         return await axios.get(domain + `/weather/getWeather/${mapX}/${mapY}/${date}`)
@@ -141,7 +152,7 @@ memberReg : async(nickName, email, password, agreed) => {
             userPhoneNm : userPhoneNm,
             userImg : userImg
         };
-      
+
         try {
           return await axios.put(domain + "/api/v1/updateUserInfo", info, {
             headers: {
@@ -159,7 +170,7 @@ memberReg : async(nickName, email, password, agreed) => {
         const newPwd = {
           password: password
         };
-      
+
         try {
           return await axios.put(domain + "/api/v1/changePwd", newPwd, {
             headers: {
@@ -171,7 +182,7 @@ memberReg : async(nickName, email, password, agreed) => {
           throw error;
         }
       },
-      
+
 
 // 각 캠핑장 부대시설, 강아지출입 등 정보 가져오기
     getAbleIcon : async(contentId) => {
@@ -215,45 +226,30 @@ memberReg : async(nickName, email, password, agreed) => {
         return await axios.post (domain + `/cart/updateItem/${cartItemId}`, item)
     },
     // 오지캠핑 데이터 db에 저장
-   onojiCampData : async(token, mapX, mapY, sbrsCl, doNm, sigunguNm, facltNm, diff, intro, addr1, url) => {
-           console.log("axios 넘기는 내용들")
-           console.log(token);
-           console.log(mapX);
-           console.log(mapY);
-           console.log(sbrsCl);
-           console.log(doNm);
-           console.log(sigunguNm);
-           console.log(facltNm);
-           console.log(diff);
-           console.log(intro);
-           console.log(addr1);
-           console.log(url);
-
-           const data = {
-               addr1 : addr1,
-               mapX : mapX,
-               mapY : mapY,
-               sbrsCl : sbrsCl,
-               doNm : doNm,
-               sigunguNm : sigunguNm,
-               facltNm : facltNm,
-               diff : diff.toString(),
-               intro : intro,
-               url : url
-           };
-           try{
-               console.log("data")
-               console.log(data);
-               return await axios.post(domain + '/oji/newMark', data, {
-                   headers: {
-                       'Content-Type': 'application/json',
-                       'Authorization': 'Bearer ' + token
-                     }
-               });
-           }catch(error) {
-               throw error;
-           }
-       },
+    onojiCampData : async(token, mapX, mapY, sbrsCl, doNm, sigunguNm, facltNm, diff, intro, addr1, url) => {
+        const data = {
+            addr1 : addr1,
+            mapX : mapX,
+            mapY : mapY,
+            sbrsCl : sbrsCl,
+            doNm : doNm,
+            sigunguNm : sigunguNm,
+            facltNm : facltNm,
+            diff : diff.toString(),
+            intro : intro,
+            url : url
+        };
+        try{
+            return await axios.post(domain + '/oji/newMark', data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                  }
+            });
+        }catch(error) {
+            throw error;
+        }
+    },
   // 찜하기
   addToFavorite : async(productId,email) => {
     const item = {

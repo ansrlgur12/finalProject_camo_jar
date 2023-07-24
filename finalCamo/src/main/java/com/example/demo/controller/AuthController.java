@@ -58,5 +58,13 @@ public class AuthController {
         return ResponseEntity.ok(isValid);
     }
 
+    /**
+     * 비밀번호 메일 전송
+     */
+    @GetMapping("/password/{email}")
+    public ResponseEntity<?> newPasswordMail(@PathVariable String email) throws Exception {
+        authService.updatePassword(email);
+        return new ResponseEntity<>("임시 비밀번호 발송 ", HttpStatus.OK);
+    }
 
 }
