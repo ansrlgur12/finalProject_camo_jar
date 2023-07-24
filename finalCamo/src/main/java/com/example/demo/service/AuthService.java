@@ -1,9 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.MemberRequestDto;
-import com.example.demo.dto.MemberResponseDto;
-import com.example.demo.dto.TokenDto;
-import com.example.demo.dto.TokenRequestDto;
+import com.example.demo.dto.*;
 import com.example.demo.entity.Member;
 import com.example.demo.entity.RefreshToken;
 import com.example.demo.jwt.TokenProvider;
@@ -118,7 +115,6 @@ public class AuthService {
         if (accessToken != null && accessToken.startsWith("Bearer ")) {
             accessToken = accessToken.substring(7);
         }
-        // 🔑토큰 유효한지 검증
         if (accessToken != null && tokenProvider.validateToken(accessToken)) {
             Long Id = Long.valueOf(userDetails.getUsername());
             Member member =  memberRepository.findById(Id)
@@ -128,6 +124,25 @@ public class AuthService {
             throw new IllegalStateException("토큰이 만료됐습니다. Refresh Token을 보내주세요.");
         }
     }
+
+    /**
+     * 임시 비밀 번호 전송
+     */
+
+    public void updatePassword(String to) throws Exception {
+        String tempPw = emailService.sendSimpleMessage(to);
+        Member member = memberRepository.findByEmail(to)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다."));
+
+        // 임시 비밀번호 암호화하여 저장
+        String encodedPassword = passwordEncoder.encode(tempPw);
+        member.setPassword(encodedPassword);
+        memberRepository.save(member);
+    }
+
+
+
+
 
 
 

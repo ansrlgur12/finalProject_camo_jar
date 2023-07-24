@@ -71,13 +71,13 @@ const MyComments = () => {
         <SmallSideBar />
         <ImageFlexBox>
           <MyPageImageBar type = {"active"}/>
-          <div style={{ padding: '24px' }}>
+          <div style={{ padding: '120px' }}>
             <Form form={form} onFinish={updateNickName}>
             </Form>
             {comments.map((comment) => (
               <Card
                 key={comment.id}
-                style={{ marginBottom: '50px' }}
+                style={{ marginBottom: '300px' }}
                 title={
                   <Link
                     to={`/reviewDetail/${comment.reviewId}`}

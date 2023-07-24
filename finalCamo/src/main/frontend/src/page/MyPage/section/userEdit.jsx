@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Upload, Checkbox } from 'antd';
+import { Button, Form, Input, Upload } from 'antd';
 import styled from 'styled-components';
 import Header from '../../../main/header';
 import Sidebar from '../sidebar';
@@ -21,7 +21,7 @@ const LayoutContainer = styled.div`
 const ContentContainer = styled.div`
 width: 70vw;
 margin: auto;
-  margin-top: 5vh;
+  margin-top: 1vh;
   flex: 1;
   padding: 50px;
   display: flex;
@@ -30,14 +30,6 @@ margin: auto;
   justify-content: center;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 5vh;
-  @media screen and (max-width: 768px) {
-    width: 50vw;
-  }
-`;
-
-const StyledCheckbox = styled(Checkbox)`
-  width: 300px;
-  margin-bottom: 20px;
   @media screen and (max-width: 768px) {
     width: 50vw;
   }
@@ -70,21 +62,18 @@ const StyledButton = styled(Button)`
 
 const normFile = (e) => {
   if (Array.isArray(e)) {
-    // e가 배열인 경우 e를 그대로 반환
     return e;
   }
-  return e?.fileList; // 배열이 아니면 fileList를 반환
+  return e?.fileList;
 };
 
 const UserEdit = () => {
   const token = Functions.getAccessToken();
 
-  // 전송 데이터
   const [userAddr, setAddr] = useState('');
   const [userPhoneNm, setUserPhoneNm] = useState('');
   const [userImg, setUserImg] = useState('');
 
-  // 팝업
   const [modalOpen, setModalOpen] = useState(false);
   const [finishModal, setFinishModal] = useState(false);
   const [modalText, setModalText] = useState('중복된 아이디 입니다.');
@@ -136,20 +125,15 @@ const UserEdit = () => {
         <ImageFlexBox>
           <MyPageImageBar type = {"info"}/>
         <ContentContainer>
-          <StyledCheckbox>나의 정보 수정하기</StyledCheckbox>
-
           <StyledUserEdit>
-            <Form.Item label="User ID" name="userId">
-              <Input disabled />
-            </Form.Item>
-            <Form.Item label="Address" name="userAddr">
+            <Form.Item label="주소" name="userAddr">
               <Input onChange={changeAddr} />
             </Form.Item>
-            <Form.Item label="Phone Number" name="userTel">
+            <Form.Item label="핸드폰 번호" name="userTel">
               <Input onChange={changePhone} />
             </Form.Item>
             <Form.Item
-              label="Profile Image"
+              label="프로필 사진"
               name="userImage"
               valuePropName="fileList"
               getValueFromEvent={normFile}

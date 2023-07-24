@@ -62,7 +62,7 @@ const CommentApi = {
   // 특정 회원의 댓글 조회
   getCommentsByMember: async (token) => {
     try {
-      return await axios.get("COMMENT_API_URL/comment/member", {
+      return await axios.get(COMMENT_API_URL + "/comment/member", {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token
