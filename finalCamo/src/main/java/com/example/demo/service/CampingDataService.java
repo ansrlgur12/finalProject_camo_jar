@@ -7,10 +7,7 @@ import com.example.demo.repository.CampRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -135,59 +132,31 @@ public class CampingDataService {
         }
     }
 
-    public List<CampDto> getCampData(String dho, String sigungu){
-        List<Camp> items = campRepository.findTop32ByOrderById();
-        List<Camp> itemsBySelect = campRepository.findTop32ByDoNmContainingAndSigunguNmContaining(dho, sigungu);
-        List<Camp> itemsByDho = campRepository.findTop32ByDoNmContaining(dho);
+    public List<CampDto> getCampData(String sortBy){
+        List<Camp> items;
+        if ("인기순".equals(sortBy)){
+            items = campRepository.findTop10ByOrderByLikesDesc();
+        } else if ("조회순".equals(sortBy)) {
+            items = campRepository.findTop10ByOrderByViewCountDesc();
+        } else { // 최신순
+            items = campRepository.findTop10ByOrderByCreatedtimeDesc();
+        }
+
         List<CampDto> campDtos = new ArrayList<>();
-        if("ALL".equals(dho) && "시.군.구".equals(sigungu)){
-            for (Camp camp : items) {
-                CampDto campDto = new CampDto();
-                campDto.setId(camp.getId());
-                campDto.setAnimalCmgCl(camp.getAnimalCmgCl());
-                campDto.setFacltNm(camp.getFacltNm());
-                campDto.setAddr1(camp.getAddr1());
-                campDto.setMapX(camp.getMapX());
-                campDto.setMapY(camp.getMapY());
-                campDto.setFirstImageUrl(camp.getFirstImageUrl());
-                campDto.setCreatedtime(camp.getCreatedtime());
-                campDto.setViewCount(camp.getViewCount());
-                campDto.setLikes(camp.getLikes().size());
-                campDto.setComments(camp.getCampComments().size());
-                campDtos.add(campDto);
-            }
-        } else if (!"ALL".equals(dho) && "시.군.구".equals(sigungu)) {
-            for (Camp camp : itemsByDho) {
-                CampDto campDto = new CampDto();
-                campDto.setId(camp.getId());
-                campDto.setAnimalCmgCl(camp.getAnimalCmgCl());
-                campDto.setFacltNm(camp.getFacltNm());
-                campDto.setAddr1(camp.getAddr1());
-                campDto.setMapX(camp.getMapX());
-                campDto.setMapY(camp.getMapY());
-                campDto.setFirstImageUrl(camp.getFirstImageUrl());
-                campDto.setCreatedtime(camp.getCreatedtime());
-                campDto.setViewCount(camp.getViewCount());
-                campDto.setLikes(camp.getLikes().size());
-                campDto.setComments(camp.getCampComments().size());
-                campDtos.add(campDto);
-            }
-        } else {
-            for (Camp camp : itemsBySelect) {
-                CampDto campDto = new CampDto();
-                campDto.setId(camp.getId());
-                campDto.setAnimalCmgCl(camp.getAnimalCmgCl());
-                campDto.setFacltNm(camp.getFacltNm());
-                campDto.setAddr1(camp.getAddr1());
-                campDto.setMapX(camp.getMapX());
-                campDto.setMapY(camp.getMapY());
-                campDto.setFirstImageUrl(camp.getFirstImageUrl());
-                campDto.setCreatedtime(camp.getCreatedtime());
-                campDto.setViewCount(camp.getViewCount());
-                campDto.setLikes(camp.getLikes().size());
-                campDto.setComments(camp.getCampComments().size());
-                campDtos.add(campDto);
-            }
+        for (Camp camp : items) {
+            CampDto campDto = new CampDto();
+            campDto.setId(camp.getId());
+            campDto.setAnimalCmgCl(camp.getAnimalCmgCl());
+            campDto.setFacltNm(camp.getFacltNm());
+            campDto.setAddr1(camp.getAddr1());
+            campDto.setMapX(camp.getMapX());
+            campDto.setMapY(camp.getMapY());
+            campDto.setFirstImageUrl(camp.getFirstImageUrl());
+            campDto.setCreatedtime(camp.getCreatedtime());
+            campDto.setViewCount(camp.getViewCount());
+            campDto.setLikes(camp.getLikes().size());
+            campDto.setComments(camp.getCampComments().size());
+            campDtos.add(campDto);
         }
         return campDtos;
     }
@@ -265,41 +234,37 @@ public class CampingDataService {
         }
         return campDtos;
     }
-    public List<CampDto> getSearchDataPn(String searchValue, String currentData, int page, int size){
+    public Page<CampDto> getSearchDataPn(String searchValue, String currentData, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("facltNm").ascending());
 
-        List<Camp> items = campRepository.findByFacltNmContaining(searchValue, pageable);
-        List<Camp> itemsAnimal = campRepository.findByAnimalCmgClNotContainingAndFacltNmContaining("불가능", searchValue, pageable);
-        List<CampDto> campDtos = new ArrayList<>();
+        Page<Camp> items;
+        if ("normal".equals(currentData)) {
+            items = campRepository.findByFacltNmContaining(searchValue, pageable);
+        } else if ("animal".equals(currentData)) {
+            items = campRepository.findByAnimalCmgClNotContainingAndFacltNmContaining("불가능", searchValue, pageable);
+        } else {
+            // Handle other cases or throw an exception if needed
+            throw new IllegalArgumentException("Invalid currentData value: " + currentData);
+        }
 
-        if("normal".equals(currentData)){
-            for (Camp camp : items ) {
-                CampDto campDto = new CampDto();
-                campDto.setFacltNm(camp.getFacltNm());
-                campDto.setAddr1(camp.getAddr1());
-                campDto.setMapX(camp.getMapX());
-                campDto.setMapY(camp.getMapY()); campDto.setAnimalCmgCl(camp.getAnimalCmgCl());
-                campDto.setFirstImageUrl(camp.getFirstImageUrl());
-                campDto.setCreatedtime(camp.getCreatedtime());
-                campDto.setViewCount(camp.getViewCount());
-                campDtos.add(campDto);
-            }
-        }
-        if("animal".equals(currentData)){
-            for (Camp camp : itemsAnimal ) {
-                CampDto campDto = new CampDto();
-                campDto.setFacltNm(camp.getFacltNm());
-                campDto.setAddr1(camp.getAddr1());
-                campDto.setMapX(camp.getMapX());
-                campDto.setMapY(camp.getMapY());
-                campDto.setFirstImageUrl(camp.getFirstImageUrl());
-                campDto.setCreatedtime(camp.getCreatedtime());
-                campDto.setViewCount(camp.getViewCount());
-                campDtos.add(campDto);
-            }
-        }
-        return campDtos;
+        List<CampDto> campDtos = items.stream()
+                .map(camp -> {
+                    CampDto campDto = new CampDto();
+                    campDto.setFacltNm(camp.getFacltNm());
+                    campDto.setAddr1(camp.getAddr1());
+                    campDto.setMapX(camp.getMapX());
+                    campDto.setMapY(camp.getMapY());
+                    campDto.setAnimalCmgCl(camp.getAnimalCmgCl());
+                    campDto.setFirstImageUrl(camp.getFirstImageUrl());
+                    campDto.setCreatedtime(camp.getCreatedtime());
+                    campDto.setViewCount(camp.getViewCount());
+                    return campDto;
+                })
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(campDtos, pageable, items.getTotalElements());
     }
+
     public List<CampDto> getIcon(String contentId){
         List<Camp> items = campRepository.findByContentId(contentId);
         List<CampDto> campDtos = new ArrayList<>();
@@ -335,7 +300,7 @@ public class CampingDataService {
     }
 
     // 페이지네이션 테스트
-    public List<CampDto> getCampDataWithPagination(String dho, String sigungu, int page, int size, String sortBy) {
+    public Page<CampDto> getCampDataWithPagination(String dho, String sigungu, int page, int size, String sortBy) {
         Pageable pageable;
         if("이름순".equals(sortBy)) {
             pageable = PageRequest.of(page, size, Sort.by("facltNm").ascending());
@@ -376,7 +341,7 @@ public class CampingDataService {
             campDtos.add(campDto);
         }
 
-        return campDtos;
+        return new PageImpl<>(campDtos, pageable, campPage.getTotalElements());
     }
 
 

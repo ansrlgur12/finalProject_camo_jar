@@ -94,7 +94,6 @@ const Section2 = styled.div`
         margin-left: 40px;
         transform: translateY(20px);
         opacity: 0;
-        text-shadow: 2px 1px 1px #ccc; /* 테두리 색과 크기 설정 */
         transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
     }
     .desc{
@@ -114,70 +113,79 @@ const Section2 = styled.div`
         opacity: 0;
         transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
     }
-    @media screen and (max-width: 768px) {
-        margin-top: 20px;
-         .item1{
-        width: 38vw;
-        height: 20vh;
-        margin-right: 2vw;
-        background-image: url(${itemp1});
-        background-size: cover;
-        background-repeat: no-repeat;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
+     @media screen and (max-width: 768px) {
+            margin-top: 20px;
+             .item1{
+            width: 38vw;
+            height: 20vh;
+            margin-right: 2vw;
+            background-image: url(${itemp1});
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            .itemtext{
+                font-size: .7em;
+            }
 
-    .item2{
-        width: 50vw;
-        background-image: url(${itemp2});
-        background-size: cover;
-        background-repeat: no-repeat;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
+        }
 
-    .item3{
-        width: 100vw;
-        height: 25vh;
-        margin-top: 4vh;
-        background-image: url(${itemp3});
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
-    .itemtext {
-        color: white;
-        font-size: 1rem;
-        margin-top: 1rem;
-        margin-left: 1rem;
-        transform: translateY(0px);
-        opacity: 1;
-    }
-    .desc{
-        font-size: .8rem;
-        margin-top: 1rem;
-        margin-left: 1rem;
-        transform: translateY(0px);
-        opacity: 1;
-    }
-    .itemBtn {
-        width: 15vw;
-        font-size: .8rem;
-        margin: 1rem 0 0 1rem;
-        transform: translateY(0px);
-        opacity: 1;
-    }
+        .item2{
+            width: 50vw;
+            background-image: url(${itemp2});
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            .itemtext{
+                font-size: .8em;
+            }
+        }
 
-    .item:hover .itemtext,
-    .item:hover .desc {
-        transform: translateY(0px);
-    }
-    }
-`;
+        .item3{
+            width: 100vw;
+            height: 25vh;
+            margin-top: 4vh;
+            background-image: url(${itemp3});
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            .itemtext{
+                font-size: 1em;
+            }
+        }
+        .itemtext {
+            color: white;
+            margin-top: 1rem;
+            margin-left: 1rem;
+            transform: translateY(0px);
+            opacity: 1;
+        }
+        .desc{
+            font-size: .7rem;
+            margin-top: 1rem;
+            margin-left: 1rem;
+            transform: translateY(0px);
+            opacity: 1;
+        }
+        .itemBtn {
+            width: 15vw;
+            font-size: .8rem;
+            margin: 1rem 0 0 1rem;
+            transform: translateY(0px);
+            opacity: 1;
+        }
+
+        .item:hover .itemtext,
+        .item:hover .desc {
+            transform: translateY(0px);
+        }
+        }
+    `;
 
 const MainSection2 = () => {
     const nav = useNavigate();

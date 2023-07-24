@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,9 +61,9 @@ public class GoCampingController {
     }
 
 
-    @GetMapping("/campData/{dho}/{sigungu}")
-    public ResponseEntity<List<CampDto>> campData(@PathVariable String dho, @PathVariable String sigungu) {
-        List<CampDto> list = campingDataService.getCampData(dho, sigungu);
+    @GetMapping("/campData/{sortBy}")
+    public ResponseEntity<List<CampDto>> campData(@PathVariable String sortBy) {
+        List<CampDto> list = campingDataService.getCampData(sortBy);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -80,11 +81,11 @@ public class GoCampingController {
 
     // 검색결과 페이지네이션
     @GetMapping("/searchData/{searchValue}/{currentData}/{page}/{size}")
-    public ResponseEntity<List<CampDto>> searchDataPN(@PathVariable String searchValue, @PathVariable String currentData, @PathVariable int page, @PathVariable int size){
+    public ResponseEntity<Page<CampDto>> searchDataPN(@PathVariable String searchValue, @PathVariable String currentData, @PathVariable int page, @PathVariable int size){
         System.out.println(searchValue + " : searchValue 값");
         System.out.println(currentData + " : currentData 값");
-        List<CampDto> list = campingDataService.getSearchDataPn(searchValue, currentData, page, size);
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        Page<CampDto> campPage = campingDataService.getSearchDataPn(searchValue, currentData, page, size);
+        return new ResponseEntity<>(campPage, HttpStatus.OK);
     }
 
     @GetMapping("/viewCount/{facltNm}")
@@ -117,9 +118,9 @@ public class GoCampingController {
     // 페이지네이션 테스트
 
     @GetMapping("/sideBarList/{dho}/{sigungu}/{page}/{size}/{sortBy}")
-    public ResponseEntity<List<CampDto>> getSidebarList(@PathVariable String dho, @PathVariable String sigungu, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
-        List<CampDto> list = campingDataService.getCampDataWithPagination(dho, sigungu, page, size, sortBy);
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    public ResponseEntity<Page<CampDto>> getSidebarList(@PathVariable String dho, @PathVariable String sigungu, @PathVariable int page, @PathVariable int size, @PathVariable String sortBy) {
+        Page<CampDto> campPage = campingDataService.getCampDataWithPagination(dho, sigungu, page, size, sortBy);
+        return new ResponseEntity<>(campPage, HttpStatus.OK);
     }
 
     @GetMapping("/camping-data/1") // 캠핑장 정보 불러오기
