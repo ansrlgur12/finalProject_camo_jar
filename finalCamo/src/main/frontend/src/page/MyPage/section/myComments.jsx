@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../../../main/header';
 import Sidebar from '../sidebar';
-import CommentApi from '../../../API/CommentAPI';
+import CommentApi from '../../../API/CommnetAPI';
 import { Layout, Card, Avatar, Form, Input, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -23,7 +23,6 @@ const MyComments = () => {
     const getUserInfo = async () => {
       try {
         const response = await AxiosApi.userInfoMe(token);
-        console.log(response)
         setUserImg(response.data.userImg);
         setNickName(response.data.nickName);
       } catch (error) {
@@ -70,14 +69,15 @@ const MyComments = () => {
         </SidebarContainer>
         <SmallSideBar />
         <ImageFlexBox>
-          <MyPageImageBar type = {"active"}/>
-          <div style={{ padding: '120px' }}>
+          <MyPageImageBar type={"active"} />
+          <div style={{ padding: '50px' }}>
             <Form form={form} onFinish={updateNickName}>
+
             </Form>
             {comments.map((comment) => (
               <Card
                 key={comment.id}
-                style={{ marginBottom: '300px' }}
+                style={{ marginBottom: '20px' }}
                 title={
                   <Link
                     to={`/reviewDetail/${comment.reviewId}`}

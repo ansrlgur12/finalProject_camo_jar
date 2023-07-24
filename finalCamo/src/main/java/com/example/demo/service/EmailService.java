@@ -105,6 +105,21 @@ public class EmailService {
      */
 
     /**
+     * 뉴 인증번호 전송
+     */
+
+    public String sendNewMessage(String to) throws Exception {
+        MimeMessage message = createMessage(to);
+        try{
+            javaMailSender.send(message); // 메일 발송
+        }catch(MailException es){
+            es.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+        return ePw; // 메일로 보냈던 인증 코드를 서버로 리턴
+    }
+
+    /**
      * 비밀번호찾기 인증번호 전송
      */
 
