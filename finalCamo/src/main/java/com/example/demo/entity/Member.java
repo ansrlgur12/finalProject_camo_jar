@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "member")
 @Getter
 @Setter
-@ToString(exclude = "ojiNoji, cart") // Exclude the ojiNoji field from toString()
+@ToString(exclude = {"ojiNoji", "cart"}) // 스택오버
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
