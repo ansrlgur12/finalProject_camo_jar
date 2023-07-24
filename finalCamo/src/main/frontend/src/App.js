@@ -45,6 +45,7 @@ import PayComplete from './page/Shop/order/PayComplete';
 import MobileCart from './page/MyPage/section/mobileCart';
 import MobileFavorite from './page/MyPage/section/mobileFavorite';
 import styled from '@emotion/styled';
+import FindAccount from './main/login/findAccount';
 
 const AppFontStyle = styled.div`
 font-family: 'Pretendard-Regular';
@@ -74,6 +75,7 @@ function App() {
               <Routes>
                 <Route path='/' element={<MainPage />} />
                 <Route path='/intro' element={<Intro />} />
+                <Route path='/findAccount' element={<FindAccount />} />
                 <Route path='/shopMain' element={<ShopMain />} />
                 <Route path='/mapMain' element={<MapMain />} />
                 <Route path='/ojinoji' element={<OjiNojiMapMain />} />

@@ -78,6 +78,7 @@ const MyReview = () => {
       const response = await ReviewApi.getReviewsByMember(token);
       const data = response.data;
 
+      // Filter the posts to include only those written by the user
       const userPosts = data.filter(post => post.nickName === nickName);
 
       setPosts(userPosts);
@@ -94,7 +95,7 @@ const MyReview = () => {
             <Link to={`/reviewDetail/${post.id}`}>
               <img
                 alt="대표이미지"
-                src={camping}
+                src={post.img}
                 style={{ width: '100%', height: '200px', objectFit: 'cover' }}
               />
             </Link>

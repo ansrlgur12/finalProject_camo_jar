@@ -81,15 +81,21 @@ public class EmailService {
     }
 
     // 인증코드 만들기
+// 인증코드 만들기
     public static String createKey() {
-        StringBuffer key = new StringBuffer();
+        StringBuilder key = new StringBuilder();
         Random rnd = new Random();
 
-        for (int i = 0; i < 6; i++) { // 인증코드 6자리
-            key.append((rnd.nextInt(10)));
+        // 10개의 숫자, 26개의 소문자, 26개의 대문자
+        String possibleChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        for (int i = 0; i < 8; i++) { // 인증코드 8자리
+            key.append(possibleChars.charAt(rnd.nextInt(possibleChars.length())));
         }
+
         return key.toString();
     }
+
 
     /**
      메일 발송
@@ -103,7 +109,7 @@ public class EmailService {
      */
 
     public String sendSimpleMessage(String to) throws Exception {
-        MimeMessage message = createMessage(to);
+        MimeMessage message = passwordMessage(to);
         try{
             javaMailSender.send(message); // 메일 발송
         }catch(MailException es){
@@ -120,4 +126,25 @@ public class EmailService {
         }
         return false;
     }
+
+
+    public MimeMessage passwordMessage(String to) throws Exception {
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        message.addRecipients(MimeMessage.RecipientType.TO, to);
+        message.setSubject("비밀번호 재설정 링크");
+
+        String msg="";
+        msg += "<p>안녕하세요! 캠핑에 모든것 CAMO! </p>";
+        msg += "재설정된 비밀번호 입니다.</p>";
+        msg += "<p>로그인 시 아래 코드를 입력해 주세요.</p>";
+        msg += "<h3>임시 비밀번호 : " + ePw + "</h3>";
+        msg += "<p>감사합니다.</p>";
+
+        message.setText(msg, "utf-8", "html"); // 내용
+        message.setFrom(new InternetAddress("tmdgus21@naver.com", "캠핑의모든것! CAMO")); // 보내는 사람
+
+        return message;
+    }
+
 }

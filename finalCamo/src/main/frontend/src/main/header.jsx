@@ -14,10 +14,11 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Commons/Modal";
 import Functions from "../Functions";
 import "../font.css";
+import AxiosApi from "../API/TestAxios";
 
 const HeaderStyle = styled.div`
     font-family: 'GongGothicMedium';
-    box-sizing: border-box; 
+    box-sizing: border-box;
     box-shadow: 1px 2px 5px #ccc;
     position: fixed;
     z-index: 10;
@@ -44,7 +45,7 @@ const HeaderStyle = styled.div`
         height: 80px;
         cursor: pointer;
     }
-    
+
     .navContainer{
         display: flex;
         color: #454545;
@@ -99,7 +100,7 @@ const HeaderStyle = styled.div`
       display: block; // 로고 보이기
       margin-left: 5vw;
     }
-    
+
     .navContainer {
       display: none; // 네비게이션 바 숨기기
     }
@@ -134,11 +135,11 @@ const HeaderStyle = styled.div`
         margin-top: 0;
     }
   }
-    
+
 `;
 export const ModalStyle = styled.div`
 
- 
+
 
  .btnWrapper{
     display: flex;
@@ -150,26 +151,40 @@ export const ModalStyle = styled.div`
   background-color: #2D6247;
   padding:10px;
   }
- 
+
  }
 `
 
 const Header = () =>{
-    
+
     const token = Functions.getAccessToken();
     const nav = useNavigate();
     const { cart } = useContext(CartContext); // CartContext를 사용하여 cart를 가져옵니다
     const context = useContext(MarkerContext);
     const {setCurrentData, setMarkerLat, setMarkerLng, setZoomLev, setOverlayOpen} = context;
     const userInfo = useContext(UserContext);
-    const { userImg} = userInfo;
     const itemsCount = cart.reduce((accum, item) => accum + item.quantity, 0); // 장바구니에 있는 모든 항목의 개수를 계산합니다
     const [hamburgerClicked, setHamburgerClicked] = useState(false);
     //const {setUserEmail, setPassword, setIsLogin, IsLogin} = userInfo;
     //const itemsCount = cart.reduce((count, item) => count + item.quantity, 0); // 장바구니에 있는 모든 항목의 개수를 계산합니다
     const [isOpen, setIsOpen] = useState(false);
     const [isLogoutModal, setIsLogoutModal] = useState(false);
-   
+    const [userImg, setUserImg] = useState('');
+
+    useEffect(() => {
+        const getUserInfo = async () => {
+          try {
+            const response = await AxiosApi.userInfoMe(token);
+            console.log(response)
+            setUserImg(response.data.userImg);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+
+        getUserInfo();
+    }, [token]);
+
     const handleMyPageClick = () => {
         if (!token) {
             setIsOpen(true);
@@ -177,7 +192,7 @@ const Header = () =>{
             nav("/userInfo");
         }
     };
-      
+
     const handleCartClick = () => {
         if (!token) {
             setIsOpen(true);
@@ -224,7 +239,7 @@ const Header = () =>{
         backgroundSize : 'contain',
         backgroundRepeat : 'no-repeat'
     }
-    
+
     const onClickNormalCamping = () => {
         setCurrentData("normal");
         setOverlayOpen(false);
@@ -239,11 +254,11 @@ const Header = () =>{
         setCurrentData("ojinoji");
         nav("/ojinoji")
     }
-    
+
     // 성능최적화. nav바에 적용
     // 전역관리
 
-    // 테스트 
+    // 테스트
 
     return(
         <>
@@ -264,10 +279,22 @@ const Header = () =>{
                     </div>
                     <div className="headerRight">
                         <SearchBox />
-                       
-                            <IconButton aria-label="account" onClick={handleMyPageClick}>
-                            <AccountCircleRounded/>
-                        </IconButton>
+
+                        <IconButton
+                            aria-label="account"
+                              onClick={handleMyPageClick}
+                                         style={{
+                                       backgroundImage: `url(${userImg})`,
+                             backgroundSize: 'cover',
+                                         backgroundRepeat: 'no-repeat',
+                             backgroundPosition: 'center',
+                                width: '30px',  // 이 값을 변경하여 아이콘 크기 조절
+                                height: '30px', // 이 값을 변경하여 아이콘 크기 조절
+                            borderRadius: '50%',  // 아이콘 모서리를 둥글게 만듭니다.
+    }}
+/>
+
+
                       
                         <IconButton aria-label="cart" onClick={handleCartClick} >
                         <Badge badgeContent={itemsCount} color="success" >
