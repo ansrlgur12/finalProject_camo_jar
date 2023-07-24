@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../../../main/header';
 import Sidebar from '../sidebar';
-import CommentApi from '../../../API/CommnetAPI';
+import CommentApi from '../../../API/CommentAPI';
 import { Layout, Card, Avatar, Form, Input, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';

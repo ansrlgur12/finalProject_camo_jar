@@ -3,7 +3,7 @@ import { List, Button, Popconfirm, message, Modal, Input, Form } from 'antd';
 import Functions from '../../../Functions';
 import styled from 'styled-components';
 import AxiosApi from '../../../API/TestAxios';
-import CommentApi from '../../../API/CommnetAPI';
+import CommentApi from '../../../API/CommentAPI';
 
 const StyledModal = styled(Modal)`
   width: 400px;
