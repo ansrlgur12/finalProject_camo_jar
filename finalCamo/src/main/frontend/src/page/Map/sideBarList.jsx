@@ -103,8 +103,12 @@ const ListStyle = styled.div`
 }
 
 @media screen and (max-width: 768px) {
-      
+    .numBtn{
+        width: 25px;
+        height: 25px;
+        font-size: medium;
     }
+}
 `;
 
 const SideBarList = (props) => {
@@ -113,28 +117,29 @@ const SideBarList = (props) => {
     const {setMarkerLat, setMarkerLng, setZoomLev, setChange, currentData, setOverlayOpen, setLocation, selectedSortBy, setCloseSideBar} = context;
     const [currentPage, setCurrentPage] = useState(0);
     const [campListData, setCampListData] = useState([]);
+    const [totalElements, setTotalElements] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
     const pageSize = 4;
-    
-    
+
+
     useEffect(()=>{
 
         if(currentData === 'animal') {
             const getAnimalList = async() => {
-                const rsp = await AxiosApi.getAnimalCampData(dho, sigungu);
-                setCampListData(rsp.data);
-                setCurrentPage(0);
-                console.log(rsp.data)
+                const rsp = await AxiosApi.getSidebarList(dho, sigungu, currentPage, pageSize, selectedSortBy);
+                console.log(rsp.data);
+                console.log(rsp.data.totalElements);
+                setTotalPages(rsp.data.totalPages);
+                setCampListData(rsp.data.content);
             }
             getAnimalList();
         } else if(currentData === 'normal') {
             const getCampList = async() => {
-                // const rsp = await AxiosApi.getCampData(dho, sigungu);
-                // setCampListData(rsp.data);
-                // setCurrentPage(1);
-                // console.log(rsp.data)
                 const rsp = await AxiosApi.getSidebarList(dho, sigungu, currentPage, pageSize, selectedSortBy);
                 console.log(rsp.data);
-                setCampListData(rsp.data);
+                console.log(rsp.data.totalElements);
+                setTotalPages(rsp.data.totalPages);
+                setCampListData(rsp.data.content);
             }
             getCampList();
         } else if(currentData === "ojinoji") {
@@ -153,8 +158,9 @@ const SideBarList = (props) => {
             console.log(searchValue)
             const searchCamp = async() => {
                 const rsp = await AxiosApi.searchCampData(searchValue, currentData, currentPage, pageSize);
-                setCampListData(rsp.data);
-                console.log(rsp.data);
+                setCampListData(rsp.data.content);
+                console.log(rsp.data.totalPages);
+                setTotalPages(rsp.data.totalPages);
                 setCurrentPage(0);
                 setChange(0)
             }
@@ -173,7 +179,7 @@ const SideBarList = (props) => {
         setOverlayOpen(true);
         setCloseSideBar(true);
     }
-    
+
     const sortCamps = (camps) => {
         switch (selectedSortBy) {
           case '이름순':
@@ -190,18 +196,11 @@ const SideBarList = (props) => {
             return [...camps];
         }
       };
-      
-    
+
+
       // 정렬된 캠핑장 목록
       const sortedCamps = sortCamps(campListData);
 
-    // const startIndex = (currentPage - 1) * pageSize;
-    // const endIndex = startIndex + pageSize;
-    // const displayedCamps = sortedCamps.slice(startIndex, endIndex);
-
-    // const totalCamps = campListData.length;
-    // const totalPages = Math.ceil(totalCamps / pageSize);
-    const totalPages = 3507/ 4;
     
         // 현재 페이지를 중심으로 앞/뒤로 표시할 페이지 버튼의 개수
     const maxPageButtons = 5;
