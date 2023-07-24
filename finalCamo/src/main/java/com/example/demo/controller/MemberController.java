@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-
 @RestController
 @Slf4j
 @RequestMapping("/api/v1")
@@ -43,7 +42,7 @@ public class MemberController {
         if (isOverlap) {
             return false;
         } else {
-            String code = emailService.sendSimpleMessage(email);
+            String code = emailService.sendNewMessage(email);
             log.info("인증 코드: " + code);
             return code;
         }
