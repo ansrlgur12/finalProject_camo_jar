@@ -68,7 +68,7 @@ tbody {
   margin-left:0;
 
     .ant-table {
-     margin-left:0.4rem;
+     margin-left:0.2rem;
       width: 100%;
     display:flex;
   font-size: 0.1rem;

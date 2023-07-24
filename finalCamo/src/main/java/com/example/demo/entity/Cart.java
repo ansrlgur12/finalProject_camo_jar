@@ -15,7 +15,7 @@ import java.util.Optional;
 @Table(name = "cart")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"ojiNoji", "member"}) // 무한호출 방지
 public class Cart {
 
     @Id

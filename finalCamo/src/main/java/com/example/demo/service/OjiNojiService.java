@@ -75,7 +75,7 @@ public class OjiNojiService {
 //    }
 
     public boolean createMarker(OjiNojiDto ojiNojiDto, HttpServletRequest request, UserDetails userDetails) {
-
+        System.out.println("service 부분");
         Member member = authService.validateTokenAndGetUser(request, userDetails);
         System.out.println(member);
 

@@ -55,6 +55,8 @@ public class OjiNojiController {
 
     @PostMapping("/newMark")
     public ResponseEntity<?> createOjiMark(@RequestBody OjiNojiDto ojiNojiDto, HttpServletRequest request, @AuthenticationPrincipal UserDetails userDetails){
+        System.out.println("서버 도착");
+        System.out.println(ojiNojiDto);
         boolean isCreate = ojiNojiService.createMarker(ojiNojiDto, request, userDetails);
         if (isCreate) return new ResponseEntity<>("마커 작성 성공", HttpStatus.OK);
         else return new ResponseEntity<>("마커 작성 실패", HttpStatus.NO_CONTENT);
@@ -94,5 +96,11 @@ public class OjiNojiController {
     public ResponseEntity<List<OjiNojiDto>> memberMarkedCamp( HttpServletRequest request, @AuthenticationPrincipal UserDetails userDetails) {
         List<OjiNojiDto> list = ojiNojiService.getMemberMarkedCampJwt(request, userDetails);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteMark")
+    public String deleteMark() {
+        ojiNojiRepository.deleteAll();
+        return "삭제 완료";
     }
 }
