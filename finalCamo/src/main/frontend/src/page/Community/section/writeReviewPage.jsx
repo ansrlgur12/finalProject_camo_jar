@@ -13,23 +13,49 @@ import AxiosApi from '../../../API/TestAxios';
 const { Content } = Layout;
 const { Option } = Select;
 
+
+const StyledButton = styled.div`
+  background: #2D6247;
+  color:#fff;
+  border-radius:4px;
+  max-width: 80px;
+  text-align: center;
+  margin-left: 4rem;
+  @media (max-width: 768px) {
+    width:20vw;
+    margin-left: 4rem;
+    text-align: center;
+  }
+`
+
+const StyledModal = styled(Modal)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 768px) {
+  .ant-modal-content {
+    margin-top: 8rem;
+  }
+}
+`
+
 const GlobalStyle = createGlobalStyle`
 
   .ck-editor__editable {
-    height: 500px;
-
+    height: 58vh;
+    width: 39.5vw;
   }
 
  h2{
   text-align: center;
-  margin-right: 34rem;
+  margin-right: 37rem;
  }
   button.ant-btn{
     width: 6vw;
   background-color: #2D6247;
   display: flex;
   margin-top: 1rem;
-  margin-left: 65.8rem;
+  margin-left: 67rem;
   align-items: center;
   justify-content: center;
   color: #fff;
@@ -41,6 +67,7 @@ const GlobalStyle = createGlobalStyle`
   @media screen and (max-width:768px) {
     .ck-editor__editable {
       height: 40vh;
+      width: 79vw;
 
     }
     button.ant-btn{
@@ -56,7 +83,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const ReviewContainer = styled.div`
-  max-width: 700px;
+  max-width: 40vw;
   margin: 0 auto;
   border: 2px solid #2D6247;
   border-radius: 6px;
@@ -189,14 +216,13 @@ const WriteReviewPage = () => {
 />
 
 
-          <Modal visible={modalVisible} onCancel={closeModal} footer={null}>
-            <h3>작성 완료</h3>
-            <p>글이 성공적으로 작성되었습니다.</p>
-            <Link to="/community">확인</Link>
-          </Modal>
-        </ReviewContainer>
-        <Button onClick={handleSubmit} style={{backgroundColor: '#2D6247', color: 'white', borderColor: 'white'}}>작성하기</Button>
-      </Content>
+          <StyledModal  visible={modalVisible} onCancel={closeModal} footer={null} title={"작성 완료"}>
+                    <p>글이 성공적으로 작성되었습니다.</p>
+                    <StyledButton onClick={() => nav("/community")}>확인</StyledButton>
+                  </StyledModal>
+                </ReviewContainer>
+                <Button onClick={handleSubmit}>작성하기</Button>
+              </Content>
     </Layout>
   );
 };
