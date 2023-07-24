@@ -24,7 +24,7 @@ const VideoBackground = () => {
     <VideoStyle>
         <div className="video-container">
             <video autoPlay loop muted>
-                <source src="/introMovie.mp4" type="video/mp4" />
+                <source src="/static/introMovie.mp4" type="video/mp4" />
             </video>
         </div>
     </VideoStyle>

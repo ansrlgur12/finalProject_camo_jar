@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.1fa7e5ce.css",
-    "main.js": "/static/js/main.c9dd7d32.js",
+    "main.js": "/static/js/main.25c6b4d5.js",
     "static/js/787.29ac5d29.chunk.js": "/static/js/787.29ac5d29.chunk.js",
     "static/media/캠핑이미지바.jpg": "/static/media/캠핑이미지바.12a2e88f18071997dbb0.jpg",
     "static/media/인포이미지바.jpg": "/static/media/인포이미지바.e15964f50022bace62d6.jpg",
@@ -56,11 +56,11 @@
     "static/media/맑음.png": "/static/media/맑음.0b43f5c98c23439dcf48.png",
     "index.html": "/index.html",
     "main.1fa7e5ce.css.map": "/static/css/main.1fa7e5ce.css.map",
-    "main.c9dd7d32.js.map": "/static/js/main.c9dd7d32.js.map",
+    "main.25c6b4d5.js.map": "/static/js/main.25c6b4d5.js.map",
     "787.29ac5d29.chunk.js.map": "/static/js/787.29ac5d29.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1fa7e5ce.css",
-    "static/js/main.c9dd7d32.js"
+    "static/js/main.25c6b4d5.js"
   ]
 }
