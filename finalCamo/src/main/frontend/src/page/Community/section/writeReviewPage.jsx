@@ -5,7 +5,7 @@ import { Button, Modal, Layout, Input, Select } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 import ReviewApi from '../../../API/ReviewAPI';
 import Header from '../../../main/header';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { storage } from '../../../firebase/firebaseConfig';
 import Functions from '../../../Functions';
 import AxiosApi from '../../../API/TestAxios';
@@ -104,7 +104,7 @@ const WriteReviewPage = () => {
   const [image, setImage] = useState(null);
   const [userImg, setUserImg] = useState('');
   const [nickName, setNickName] = useState('');
-
+  const nav =  useNavigate();
   useEffect(() => {
     const getUserInfo = async () => {
       try {
