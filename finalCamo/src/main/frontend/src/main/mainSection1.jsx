@@ -11,8 +11,8 @@ import 'swiper/css/autoplay'
 export const Section1 = styled.div`
     display: flex;
     justify-content: center;
-    font-family: "InkLipquid";
 
+    font-family: 'Pretendard-Regular';
     .backImg {
         width: 100vw;
         height: 50vh;
@@ -36,7 +36,7 @@ export const Section1 = styled.div`
         position: absolute;
         transform: translate(-50%, -50%);
         opacity: 0; /* 초기에 텍스트를 숨김 */
-        text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6); /* 테두리 색과 크기 설정 */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* 테두리 색과 크기 설정 */
         transition: opacity 0.6s ease, top 0.6s ease-in; /* 애니메이션 효과 설정 */
     }
     .mainText2 {
@@ -72,7 +72,7 @@ export const Section1 = styled.div`
         text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* 테두리 색과 크기 설정 */
     }
     .text2{
-        color: rgb(255, 254, 179);
+        color: rgb(220, 219, 135);
         text-shadow: 2px 2px 5px rgba(121, 121, 121, 0.5);
     }
     .text3{
@@ -116,11 +116,14 @@ export const Section1 = styled.div`
             object-fit: cover;
             object-position: center;
         }
+        .text1{
+        font-size: 0.7rem;
+    }
         .mainText {
             margin-left: 7vw;
             margin-top: 7vh;
             z-index: 1;
-            font-size: 2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             position: absolute;
             transform: translate(-50%, -50%);
@@ -132,7 +135,7 @@ export const Section1 = styled.div`
             margin-top: 5vh;
             z-index: 1;
             width: 90vw;
-            font-size: 2rem;
+            font-size: 0.9rem;
             color: rgb(186, 210, 170);
             font-weight: bold;
             position: absolute;
@@ -146,7 +149,7 @@ export const Section1 = styled.div`
             margin-left: 15vw;
             margin-top: 7vh;
             z-index: 1;
-            font-size: 2rem;
+            font-size: 0.9rem;
             font-weight: bold;
             position: absolute;
             transform: translate(-50%, -50%);
@@ -167,7 +170,7 @@ export const Section1 = styled.div`
             display: none;
         }
     }
-`;
+    `
 
 const MainSection1 = () => {
     const [showText, setShowText] = useState(false);
