@@ -1,9 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { List, Button, Popconfirm, message, Modal, Input, Form } from 'antd';
-import CommentApi from '../../../API/CommnetAPI';
 import Functions from '../../../Functions';
 import styled from 'styled-components';
 import AxiosApi from '../../../API/TestAxios';
+import CommentApi from '../../../API/CommnetAPI';
 
 const ResponsiveButton = styled(Button)`
    @media screen and (max-width:768px) {
@@ -21,7 +21,7 @@ const CommentList = ({ reviewId }) => {
   const [editingContent, setEditingContent] = useState('');
   const [nickName, setNickName] = useState('');
 
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
       const response = await CommentApi.getCommentByReview(reviewId);
       const commentsData = response.data;
@@ -29,11 +29,11 @@ const CommentList = ({ reviewId }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [reviewId]);
 
   useEffect(() => {
     fetchComments();
-  }, [reviewId]);
+  }, [fetchComments, reviewId]);
 
   useEffect(() => {
     const getUserInfo = async () => {
